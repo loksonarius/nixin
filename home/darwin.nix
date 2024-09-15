@@ -18,10 +18,10 @@
       enable-ssh-support
       default-cache-ttl 600
       max-cache-ttl 7200
-      pinentry-program ${pkgs.pinentry_mac}/bin/pinentry-mac
+      pinentry-program ${pkgs.pinentry-tty}/bin/pinentry-tty
     '';
 
-    home.packages = with pkgs; [ gnutar pinentry_mac unixtools.watch ];
+    home.packages = with pkgs; [ gnutar pinentry-tty unixtools.watch ];
 
     # the godot package provided by nixpkgs does not compile on Darwin
     programs.nixvim.plugins.godot = {
