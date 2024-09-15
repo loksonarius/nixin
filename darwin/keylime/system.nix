@@ -19,9 +19,9 @@
     # show temperature in Celsius -- bite me
     AppleTemperatureUnit = "Celsius";
     # delay before held key is repeated
-    InitialKeyRepeat = 1;
+    InitialKeyRepeat = 25;
     # repeat rate for held key
-    KeyRepeat = 1;
+    KeyRepeat = 2;
     # expand save panel by default, why 2, why not?
     NSNavPanelExpandedStateForSaveMode = true;
     NSNavPanelExpandedStateForSaveMode2 = true;
