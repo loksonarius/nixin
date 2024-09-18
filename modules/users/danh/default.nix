@@ -1,5 +1,5 @@
-{ config, pkgs, lib, inputs, system, ... }:
-let darwinConfig = lib.mkIf config.nixin.users.darwin (import ./darwin.nix);
+{ config, pkgs, lib, inputs, ... }:
+let darwinConfig = lib.mkIf config.nixin.darwin (import ./darwin.nix);
 in {
   options = { nixin.users.danh.enable = lib.mkEnableOption "danh"; };
 

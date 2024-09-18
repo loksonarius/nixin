@@ -24,9 +24,9 @@
         specialArgs = { inherit nixpkgs system; };
         modules = [
           ./darwin/keylime
-          ./users
+          ./modules
           {
-            nixin.users.darwin = true;
+            nixin.darwin = true;
             nixin.users.danh.enable = true;
           }
         ];
