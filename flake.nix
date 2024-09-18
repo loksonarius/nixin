@@ -12,27 +12,29 @@
   };
 
   outputs = inputs@{ self, nix-darwin, home-manager, nixvim, nixpkgs }:
-    let system = "aarch64-darwin";
+    let
+      system = "aarch64-darwin";
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
     in {
       darwinConfigurations."danh@keylime" = nix-darwin.lib.darwinSystem {
         specialArgs = { inherit nixpkgs system; };
         modules = [
           ./darwin/keylime
+          ./users
           {
-            users.users.danh = {
-              name = "danh";
-              home = "/Users/danh";
-            };
+            nixin.users.darwin = true;
+            nixin.users.danh.enable = true;
           }
         ];
       };
 
       homeConfigurations = {
         "danh@keylime" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
+          inherit pkgs;
           modules = [
             nixvim.homeManagerModules.nixvim
             (import ./home { inherit system; })
