@@ -1,4 +1,4 @@
 { config, pkgs, lib, inputs, ... }: {
-  imports = [ ./users ];
+  imports = [ ./hosts ./users ];
   options = { nixin.darwin = lib.mkEnableOption "darwin"; };
 }
