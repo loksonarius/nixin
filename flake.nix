@@ -21,13 +21,29 @@
 
     in {
       darwinConfigurations."danh@keylime" = nix-darwin.lib.darwinSystem {
-        specialArgs = { inherit nixpkgs system; };
+        specialArgs = { inherit pkgs; };
         modules = [
-          ./darwin/keylime
+          # ./darwin/keylime
+          {
+            # nix.settings = {
+            #   auto-optimise-store = true;
+            #   experimental-features = [ "nix-command" "flakes" ];
+            # };
+            #
+            # nix.gc.automatic = true;
+            # nix.optimise.automatic = true;
+            #
+            # nixpkgs.config.allowUnfree = true;
+            # nixpkgs.hostPlatform = "aarch64-darwin";
+            # nixpkgs.pkgs = pkgs;
+
+            # services.nix-daemon.enable = true;
+          }
           ./modules
           {
             nixin.darwin = true;
             nixin.users.danh.enable = true;
+            nixin.hosts.keylime.enable = true;
           }
         ];
       };

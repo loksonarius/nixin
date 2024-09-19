@@ -9,7 +9,7 @@
     nix.optimise.automatic = true;
 
     nixpkgs.config.allowUnfree = true;
-    nixpkgs.hostPlatform = "aarch64-darwin";
+    nixpkgs.pkgs = pkgs;
 
     services.nix-daemon.enable = true;
   };
