@@ -23,7 +23,15 @@ in {
         key = "DF9C44F82FC1A23FA1C2FDEE1016B4C6A40FCD2A";
       };
 
-      ignores = [ ".DS_Store" ".envrc" ".swp" ".tool-versions" ".venv" "tags" ];
+      ignores = [
+        ".DS_Store"
+        ".direnv"
+        ".envrc"
+        ".swp"
+        ".tool-versions"
+        ".venv"
+        "tags"
+      ];
 
       extraConfig = {
         core.editor = "nvim";
