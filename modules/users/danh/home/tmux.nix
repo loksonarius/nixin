@@ -21,8 +21,6 @@ in {
         "# Soften status bar color"
         "set -g status-bg '#282c34'"
         "set -g status-fg '#848b98'"
-        "# Prevent auto-renaming of panes"
-        "setw -g automatic-rename off"
         "# Move statusbar to top"
         "set-option -g status-position top"
         "# Center window list"
@@ -37,6 +35,9 @@ in {
         "bind-key -r -T prefix C-Right resize-pane -R 15"
         "# Increase window for repeated commands"
         "set -g repeat-time 1000"
+        "# Rename windows with their path's basename"
+        "set-option -g automatic-rename on"
+        "set-option -g automatic-rename-format '#{b:pane_current_path}'"
       ];
     };
 
