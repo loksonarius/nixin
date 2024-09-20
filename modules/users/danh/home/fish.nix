@@ -1,26 +1,10 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let enabled = config.nixin.users.danh.enable;
 in {
   config = lib.mkIf enabled {
     programs.fish = {
       enable = true;
-
-      interactiveShellInit = ''
-        # Starship Prompt
-        # eval (starship init fish)
-
-        # Enable direnv
-        # eval (direnv hook fish)
-
-        # Github CLI Completion
-        eval (gh completion -s fish)
-
-        # Leverage gpg for ssh and signing
-        set -x GPG_TTY (tty)
-        set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-
-        tmux new-session -A 0
-      '';
+      functions = { fish_greeting = "echo 'lol look at you again'"; };
     };
   };
 }

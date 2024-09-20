@@ -2,7 +2,7 @@
 let enabled = config.nixin.users.danh.enable;
 in {
   config = lib.mkIf enabled {
-    home.packages = [ pkgs.gh pkgs.git-ignore ];
+    home.packages = [ pkgs.git-ignore ];
     programs.git = {
       enable = true;
       userName = "Dan Herrera";
@@ -31,7 +31,7 @@ in {
       };
     };
 
-    programs.fish.shellAliases = {
+    home.shellAliases = {
       g = "git";
 
       gs = "git status";

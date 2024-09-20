@@ -31,5 +31,13 @@ in {
       maxCacheTtl = 7200;
       pinentryPackage = pkgs.pinentry-tty;
     };
+
+    home.shellAliases = { gpgre = "gpg-connect-agent updatestartuptty /bye"; };
+
+    programs.fish.interactiveShellInit = ''
+      # Leverage gpg for ssh and signing
+      set -x GPG_TTY (tty)
+      set -x SSH_AUTH_SOCK (${config.programs.gpg.package}/bin/gpgconf --list-dirs agent-ssh-socket)
+    '';
   };
 }

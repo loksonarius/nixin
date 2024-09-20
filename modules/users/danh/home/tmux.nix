@@ -39,5 +39,16 @@ in {
         "set -g repeat-time 1000"
       ];
     };
+
+    programs.fish.shellInitLast = ''
+      if not set -q TMUX
+        set session (${config.programs.tmux.package}/bin/tmux list-sessions 2> /dev/null | sort | head -n1 | cut -d: -f1)
+        if test -z $session
+          ${config.programs.tmux.package}/bin/tmux new -s 0
+        else
+          ${config.programs.tmux.package}/bin/tmux attach -t $session
+        end
+      end
+    '';
   };
 }
