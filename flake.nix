@@ -20,16 +20,18 @@
       };
 
     in {
-      darwinConfigurations."danh@keylime" = nix-darwin.lib.darwinSystem {
-        specialArgs = { inherit pkgs; };
-        modules = [
-          ./modules
-          {
-            nixin.darwin = true;
-            nixin.users.danh.enable = true;
-            nixin.hosts.keylime.enable = true;
-          }
-        ];
+      darwinConfigurations = {
+        "danh@keylime" = nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit pkgs; };
+          modules = [
+            ./modules
+            {
+              nixin.darwin = true;
+              nixin.users.danh.enable = true;
+              nixin.hosts.keylime.enable = true;
+            }
+          ];
+        };
       };
 
       homeConfigurations = {
