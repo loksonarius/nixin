@@ -1,7 +1,7 @@
 { config, lib, system, ... }:
 let
-  enabled = config.nixin.users.danh.enable
-    && lib.strings.hasSuffix "darwin" system;
+  cfg = config.nixin.users.danh;
+  enabled = cfg.enable && lib.strings.hasSuffix "darwin" system;
 in {
   imports = [ ./../options.nix ];
   config = lib.mkIf enabled {

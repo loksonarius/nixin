@@ -18,15 +18,14 @@
         inherit system;
         config.allowUnfree = true;
       };
-
     in {
       darwinConfigurations = {
         "danh@keylime" = nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit pkgs; };
+          specialArgs = { inherit pkgs system; };
           modules = [
-            ./modules
+            ./modules/users/danh/darwin
+            ./modules/hosts/keylime/darwin
             {
-              nixin.darwin = true;
               nixin.users.danh.enable = true;
               nixin.hosts.keylime.enable = true;
             }
