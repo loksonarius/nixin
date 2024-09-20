@@ -16,6 +16,7 @@ in {
     ./amethyst.nix
     ./bat.nix
     ./direnv.nix
+    ./editorconfig.nix
     ./fish.nix
     ./fonts.nix
     ./gh.nix
