@@ -18,7 +18,6 @@
         inherit system;
         config.allowUnfree = true;
       };
-      lib = nixpkgs.lib.extend (final: prev: (import ./lib final));
     in {
       darwinConfigurations = {
         "danh@keylime" = nix-darwin.lib.darwinSystem {
@@ -37,9 +36,11 @@
       homeConfigurations = {
         "danh@keylime" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+          extraSpecialArgs = { inherit pkgs system; };
           modules = [
             nixvim.homeManagerModules.nixvim
-            (import ./home { inherit system; })
+            ./modules/users/danh/home
+            { nixin.users.danh.enable = true; }
           ];
         };
       };

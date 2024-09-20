@@ -1,11 +1,20 @@
 { config, lib, pkgs, system, ... }:
-let enabled = config.nixin.users.danh.enable;
+let
+  isDarwin = lib.strings.hasSuffix "darwin" system;
+  isLinux = lib.strings.hasSuffix "linux" system;
+  homeDir = if isDarwin then
+    "/Users/danh"
+  else if isLinux then
+    "/home/danh"
+  else
+    "system does not contain a recognized target";
+  enabled = config.nixin.users.danh.enable;
 in {
   imports = [ ./../options.nix ./common ];
 
   config = lib.mkIf enabled {
     home.username = "danh";
-    home.homeDirectory = "/Users/danh";
+    home.homeDirectory = homeDir;
     home.stateVersion = "23.05";
     programs.home-manager.enable = true;
   };
