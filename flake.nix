@@ -18,6 +18,7 @@
         inherit system;
         config.allowUnfree = true;
       };
+      lib = nixpkgs.lib.extend (final: prev: (import ./lib final));
     in {
       darwinConfigurations = {
         "danh@keylime" = nix-darwin.lib.darwinSystem {
