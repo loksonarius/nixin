@@ -1,18 +1,9 @@
-{ config, pkgs, lib, ... }:
-
-{
-  options = {
-    user-home.darwin.enable = lib.mkOption {
-      description =
-        "Inlcudes Darwin-specific home-manager configuration when enabled";
-      default = false;
-      example = true;
-      type = lib.types.bool;
-    };
-  };
-
-  # no gpg-agent config option for home-manager on Darwin
-  config = lib.mkIf config.user-home.darwin.enable {
+{ config, lib, pkgs, system, ... }:
+let
+  enabled = config.nixin.users.danh.enable
+    && lib.strings.hasSuffix "darwin" system;
+in {
+  config = lib.mkIf enabled {
     home.packages = with pkgs; [ gnutar unixtools.watch ];
 
     # the godot package provided by nixpkgs does not compile on Darwin

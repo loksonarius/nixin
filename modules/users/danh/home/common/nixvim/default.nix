@@ -1,17 +1,18 @@
-{ config, pkgs, lib, ... }: {
+{ config, lib, ... }:
+let enabled = config.nixin.users.danh.enable;
+in {
   imports = [
     ./cmp.nix
     ./gitsigns.nix
     ./godot.nix
     ./lsp.nix
     ./lualine.nix
-    ./lualine.nix
     ./none-ls.nix
     ./schemastore.nix
     ./telescope.nix
     ./treesitter.nix
   ];
-  config = {
+  config = lib.mkIf enabled {
     programs.fish.shellAliases = { vim = "nvim"; };
 
     programs.nixvim = {
