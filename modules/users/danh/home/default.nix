@@ -10,7 +10,23 @@ let
     "system does not contain a recognized target";
   enabled = config.nixin.users.danh.enable;
 in {
-  imports = [ ./../options.nix ./common ];
+  imports = [
+    ./../options.nix
+    ./ack.nix
+    ./amethyst.nix
+    ./bat.nix
+    ./direnv.nix
+    ./fish.nix
+    ./fonts.nix
+    ./git.nix
+    ./gpg.nix
+    ./kubectl.nix
+    ./lsd.nix
+    ./misc-pkgs.nix
+    ./nixvim
+    ./starship.nix
+    ./tmux.nix
+  ];
 
   config = lib.mkIf enabled {
     home.username = "danh";
