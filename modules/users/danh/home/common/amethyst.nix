@@ -1,17 +1,9 @@
-{ config, lib, pkgs, system, ... }:
+{ config, lib, system, ... }:
 let
   enabled = config.nixin.users.danh.enable
     && lib.strings.hasSuffix "darwin" system;
 in {
   config = lib.mkIf enabled {
-    home.packages = with pkgs; [ gnutar unixtools.watch ];
-
-    # the godot package provided by nixpkgs does not compile on Darwin
-    programs.nixvim.plugins.godot = {
-      godotPackage = null;
-      settings.executable = "/Applications/Godot.app/Contents/MacOS/Godot";
-    };
-
     home.file.".config/amethyst/amethyst.yml".text = ''
       layouts:
         - middle-wide

@@ -1,5 +1,8 @@
-{ config, lib, pkgs, ... }:
-let enabled = config.nixin.users.danh.enable;
+{ config, lib, pkgs, system, ... }:
+let
+  isDarwin = lib.strings.hasSuffix "darwin" system;
+  isLinux = lib.strings.hasSuffix "linux" system;
+  enabled = config.nixin.users.danh.enable;
 in {
   config = lib.mkIf enabled {
     programs.gpg = {
@@ -7,16 +10,26 @@ in {
       settings = { charset = "utf-8"; };
     };
 
-    # not every target OS can use home-manager's gpg-agent service option,
-    # so I add this little portion here that's cross-platform enough
     home.packages = [ pkgs.pinentry-tty ];
-    home.file.".gnupg/gpg-agent.conf".text = ''
-      enable-putty-support
-      enable-ssh-support
-      default-cache-ttl 600
-      max-cache-ttl 7200
-      pinentry-program ${pkgs.pinentry-tty}/bin/pinentry-tty
-    '';
 
+    # can't use services on OSX cause no systemd
+    home.file.".gnupg/gpg-agent.conf" = lib.mkIf isDarwin {
+      text = ''
+        enable-putty-support
+        enable-ssh-support
+        default-cache-ttl 600
+        max-cache-ttl 7200
+        pinentry-program ${pkgs.pinentry-tty}/bin/pinentry-tty
+      '';
+    };
+
+    services.gpg-agent = lib.mkIf isLinux {
+      enable = true;
+      enableSshSupport = true;
+      enableFishIntegration = true;
+      defaultCacheTtl = 600;
+      maxCacheTtl = 7200;
+      pinentryPackage = pkgs.pinentry-tty;
+    };
   };
 }

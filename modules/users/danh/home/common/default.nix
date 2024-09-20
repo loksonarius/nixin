@@ -1,5 +1,6 @@
 { ... }: {
   imports = [
+    ./amethyst.nix
     ./ack.nix
     ./bat.nix
     ./direnv.nix
