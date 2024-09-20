@@ -12,28 +12,37 @@
   };
 
   outputs = inputs@{ self, nix-darwin, home-manager, nixvim, nixpkgs }:
-    let system = "darwin";
+    let
+      system = "aarch64-darwin";
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in {
-      darwinConfigurations."danh@keylime" = nix-darwin.lib.darwinSystem {
-        specialArgs = { inherit nixpkgs system; };
-        modules = [
-          # OS Config
-          ./darwin/keylime
+      darwinConfigurations = {
+        "danh@keylime" = nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit pkgs system; };
+          modules = [
+            ./modules/users/danh/darwin
+            ./modules/hosts/keylime/darwin
+            {
+              nixin.users.danh.enable = true;
+              nixin.hosts.keylime.enable = true;
+            }
+          ];
+        };
+      };
 
-          # User Config
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
-
-            users.users.danh = {
-              name = "danh";
-              home = "/Users/danh";
-            };
-            home-manager.users.danh = import ./home { inherit system; };
-          }
-        ];
+      homeConfigurations = {
+        "danh@keylime" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit pkgs system; };
+          modules = [
+            nixvim.homeManagerModules.nixvim
+            ./modules/users/danh/home
+            { nixin.users.danh.enable = true; }
+          ];
+        };
       };
     };
 }
