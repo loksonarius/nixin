@@ -6,9 +6,13 @@ in {
   config = lib.mkIf enabled {
     environment.variables.HOMEBREW_NO_ANALYTICS = "1";
 
+    environment.systemPath = [ "/opt/homebrew/bin/" ];
+
     homebrew.enable = true;
 
     homebrew.casks = [
+      "1password"
+      "1password-cli"
       "aerial"
       "anki"
       "amethyst"
