@@ -23,11 +23,10 @@
         "danh@keylime" = nix-darwin.lib.darwinSystem {
           specialArgs = { inherit pkgs system; };
           modules = [
-            ./modules/users/danh/darwin
-            ./modules/hosts/keylime/darwin
+            ./modules/users/darwin.nix
             {
               nixin.users.danh.enable = true;
-              nixin.hosts.keylime.enable = true;
+              nixin.users.danh.host = "keylime";
             }
           ];
         };
@@ -35,11 +34,10 @@
         "danh@okra" = nix-darwin.lib.darwinSystem {
           specialArgs = { inherit pkgs system; };
           modules = [
-            ./modules/users/danh/darwin
-            ./modules/hosts/okra/darwin
+            ./modules/users/darwin.nix
             {
               nixin.users.danh.enable = true;
-              nixin.hosts.okra.enable = true;
+              nixin.users.danh.host = "okra";
             }
           ];
         };
