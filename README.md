@@ -17,11 +17,17 @@ explaining here.
 In my head, a role is a logical grouping of configurations that accomplish a
 goal across various system types. For example, the `users/danh` role represents
 everything involved in configuring access for my user across hosts, including
-both OS configs as well as my personal preferences and dotfiles. The way these
-configurations are accessed is by directly importing the module matching the
-type of the calling config. In other words, a nix-darwin `darwinSystem` would
-import the `users/danh/darwin` module and a home-manager
-`homeManagerConfiguration` would import the `users/danh/home` module.
+both OS configs as well as my personal preferences and dotfiles.
+
+That is, a role isn't a nix module at all, but instead a logical grouping of
+modules. This primarily due to there being various kinds of configurations that
+are all necessary to accomplish broader goals on a system.
+
+The different configuration types are accessed is by directly importing the
+module matching the type of the calling config. In other words, a nix-darwin
+`darwinSystem` would import the `./modules/users/darwin.nix` module and a
+home-manager `homeManagerConfiguration` would import the
+`./modules/users/home.nix` module.
 
 ### Outputs
 
@@ -51,14 +57,14 @@ The sub-directories here are my classification for "role" types. This is purely
 semantics and has no functionality beyond organization. There's currently only
 two role types:
 
-- `hosts`: represent a physical or virtual machine
-- `users`: represents a real person or archetype that'd have access to a host
+- `users`: represents a real person or service account that would have
+access to a host
 
-Under each role, there will be module directories for each configuration type
+Under each role, there will be module files for each configuration type
 needed to accomplish the role's intent. These will be directly imported up in
 `flake.nix` according to the output being defined.
 
-### modules/\*/\*/options.nix
+### modules/{roleType}/{roleName}/options.nix
 
 For each role, I've included a place for common module options that could span
 across different configuration types. These options will at least include an
@@ -66,7 +72,7 @@ enable option for the role, such that importing a role's module is not enough to
 evaluate the entire config.
 
 So for  the `danh` role, for example, the `nixin.users.danh.enable` option must
-be `true` for whatever module was imported from the `danh` role.
+be `true` to actually render the config of whatever role modules were imported.
 
 ## Usage
 
@@ -74,7 +80,9 @@ be `true` for whatever module was imported from the `danh` role.
 
 ```bash
 nix run nix-darwin -- switch --flake .#danh@keylime
-nix run home-manager -- switch --flake .#danh@keylime
+# or .#danh@okra or whatever darwin target this is
+
+nix run home-manager -- switch --flake .#danh
 ```
 
 ### if you're not
