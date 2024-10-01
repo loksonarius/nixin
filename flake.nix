@@ -31,10 +31,22 @@
             }
           ];
         };
+
+        "danh@okra" = nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit pkgs system; };
+          modules = [
+            ./modules/users/danh/darwin
+            ./modules/hosts/okra/darwin
+            {
+              nixin.users.danh.enable = true;
+              nixin.hosts.okra.enable = true;
+            }
+          ];
+        };
       };
 
       homeConfigurations = {
-        "danh@keylime" = home-manager.lib.homeManagerConfiguration {
+        "danh" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = { inherit pkgs system; };
           modules = [

@@ -1,6 +1,6 @@
 { config, lib, pkgs, system, ... }:
 let
-  enabled = config.nixin.hosts.keylime.enable
+  enabled = config.nixin.hosts.okra.enable
     && lib.strings.hasSuffix "darwin" system;
 in {
   config = lib.mkIf enabled {
@@ -69,7 +69,6 @@ in {
         "/Applications/Safari.app"
         "/System/Applications/Music.app"
         "/System/Applications/Mail.app"
-        "/Applications/Discord.app"
         "/System/Applications/Reminders.app"
         "/System/Applications/Calendar.app"
       ];

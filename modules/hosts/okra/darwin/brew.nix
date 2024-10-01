@@ -1,6 +1,6 @@
 { config, lib, system, ... }:
 let
-  enabled = config.nixin.hosts.keylime.enable
+  enabled = config.nixin.hosts.okra.enable
     && lib.strings.hasSuffix "darwin" system;
 in {
   config = lib.mkIf enabled {
@@ -11,31 +11,19 @@ in {
     homebrew.enable = true;
 
     homebrew.casks = [
-      "anki"
+      "1password"
+      "1password-cli"
       "amethyst"
-      "blender"
-      "discord"
-      "godot"
-      "itch"
       "iterm2"
       "keepingyouawake"
-      "obs"
-      "protonmail-bridge"
-      "steam"
-      "vlc"
+      "slack"
       "yubico-authenticator"
-      "yubico-yubikey-manager"
-      "zoom"
     ];
 
     homebrew.masApps = {
       "AdGuard for Safari" = 1440147259;
-      "DaVinci Resolve" = 571213070;
       "Dark Reader for Safari" = 1438243180;
-      "Gifox 2" = 1461845568;
       "Keys for Safari" = 1494642810;
-      "Reeder Classic." = 1529448980;
-      "WhatsApp Messenger" = 310633997;
     };
   };
 }
