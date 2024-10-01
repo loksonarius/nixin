@@ -31,6 +31,7 @@ in {
       markview.enable = true;
       nvim-lightbulb.enable = true;
       rainbow-delimiters.enable = true;
+      web-devicons.enable = true;
       which-key.enable = true;
     };
 
