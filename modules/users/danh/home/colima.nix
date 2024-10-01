@@ -1,4 +1,4 @@
-{ config, lib, system, ... }:
+{ config, lib, system, pkgs, ... }:
 let
   enabled = config.nixin.users.danh.enable
     && lib.strings.hasSuffix "darwin" system;

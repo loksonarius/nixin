@@ -15,6 +15,7 @@ in {
     ./ack.nix
     ./amethyst.nix
     ./bat.nix
+    ./colima.nix
     ./direnv.nix
     ./editorconfig.nix
     ./fish.nix

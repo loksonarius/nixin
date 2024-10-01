@@ -1,6 +1,7 @@
 { config, lib, system, ... }:
 let
-  enabled = config.nixin.hosts.keylime.enable
+  cfg = config.nixin.users.danh;
+  enabled = cfg.enable && cfg.host == "keylime"
     && lib.strings.hasSuffix "darwin" system;
 in {
   config = lib.mkIf enabled {

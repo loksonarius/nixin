@@ -1,6 +1,6 @@
 { config, lib, pkgs, system, ... }:
 let
-  enabled = config.nixin.hosts.keylime.enable
+  enabled = config.nixin.users.danh.enable
     && lib.strings.hasSuffix "darwin" system;
 in {
   config = lib.mkIf enabled {
@@ -58,21 +58,12 @@ in {
       appswitcher-all-displays = true;
       # always show the dock
       autohide = false;
-      # disable dock magnification on hover 
+      # disable dock magnification on hover
       magnification = false;
       # disable MRU switching for spaces -- ew!
       mru-spaces = false;
       # position dock on screen bottom
       orientation = "bottom";
-      # persistent apps on dock
-      persistent-apps = [
-        "/Applications/Safari.app"
-        "/System/Applications/Music.app"
-        "/System/Applications/Mail.app"
-        "/Applications/Discord.app"
-        "/System/Applications/Reminders.app"
-        "/System/Applications/Calendar.app"
-      ];
       # persistent folders on dock
       persistent-others = [ "/Users/danh/Downloads" ];
       # display process indicators on dock
@@ -133,12 +124,6 @@ in {
     };
 
     system.defaults.CustomUserPreferences = {
-      "NSGlobalDomain" = {
-        # set accent color to green
-        AppleAccentColor = 3;
-        # set highlight color to green
-        "AppleHighlightColor" = "0.752941 0.964706 0.678431 Green";
-      };
       "com.apple.finder" = {
         # search current folder by default on Finder
         FXDefaultSearchScope = "SCcf";
@@ -152,16 +137,6 @@ in {
       "com.apple.AdLib" = {
         # disable personalied ads
         allowApplePersonalizedAdvertising = false;
-      };
-      "com.apple.SoftwareUpdate" = {
-        # enable update auto checking
-        AutomaticCheckEnabled = true;
-        # check for software updates daily, not just once per week
-        ScheduleFrequency = 1;
-        # download newly available updates in background
-        AutomaticDownload = 1;
-        # install System data files and security updates
-        CriticalUpdateInstall = 1;
       };
     };
   };
