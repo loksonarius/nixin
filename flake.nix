@@ -51,7 +51,7 @@
           extraSpecialArgs = { inherit pkgs system; };
           modules = [
             nixvim.homeManagerModules.nixvim
-            ./modules/users/danh/home
+            ./modules/users/home.nix
             { nixin.users.danh.enable = true; }
           ];
         };
