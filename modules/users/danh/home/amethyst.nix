@@ -13,6 +13,9 @@ in {
         - column
         - bsp
 
+      floating:
+        - com.googlecode.iterm2
+
       mod1:
         - option
         - shift
