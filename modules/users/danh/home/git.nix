@@ -17,10 +17,10 @@ in {
       };
       lfs.enable = true;
 
-      signing = {
-        # signByDefault = true;
-        signByDefault = false;
-        key = "DF9C44F82FC1A23FA1C2FDEE1016B4C6A40FCD2A";
+      extraConfig = {
+        gpg.format = "ssh";
+        tag.gpgsign = true;
+        user.signingKey = "~/.ssh/id_ed25519_sk_rk_danh-pk.pub";
       };
 
       ignores = [
