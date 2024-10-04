@@ -6,12 +6,16 @@ in {
   config = lib.mkIf enabled {
     home.file.".config/amethyst/amethyst.yml".text = ''
       layouts:
-        - middle-wide
-        - tall
         - wide
-        - fullscreen
+        - middle-wide
+        - 3column-right
+        - tall
+        - tall-right
+        - widescreen-tall
+        - widescreen-tall-right
         - column
         - bsp
+        - fullscreen
 
       floating:
         - com.googlecode.iterm2
