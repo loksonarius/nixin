@@ -38,7 +38,7 @@ in {
         "# Rename windows with their path's basename"
         "set-option -g automatic-rename on"
         ''
-          set-option -g automatic-rename-format '#[fg=white,bold]#{pane_current_command} #[fg=white]#(echo "#{pane_current_path}" | rev | cut -d'/' -f-3 | rev)''
+          set-option -g automatic-rename-format '#[fg=white,bold]#{pane_current_command} #[fg=white]#(echo "#{pane_current_path}" | rev | cut -d'/' -f-2 | rev)''
       ];
     };
 
