@@ -44,13 +44,26 @@
       };
 
       homeConfigurations = {
-        "danh" = home-manager.lib.homeManagerConfiguration {
+        "danh@home" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = { inherit pkgs system; };
           modules = [
             nixvim.homeManagerModules.nixvim
             ./modules/users/home.nix
             { nixin.users.danh.enable = true; }
+          ];
+        };
+
+        "danh@work" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit pkgs system; };
+          modules = [
+            nixvim.homeManagerModules.nixvim
+            ./modules/users/home.nix
+            {
+              nixin.users.danh.enable = true;
+              nixin.users.danh.git.global.email = "dan.herrera@lambdal.com";
+            }
           ];
         };
       };

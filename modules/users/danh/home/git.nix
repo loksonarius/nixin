@@ -6,7 +6,7 @@ in {
     programs.git = {
       enable = true;
       userName = "Dan Herrera";
-      userEmail = "danh@shew.io";
+      userEmail = config.nixin.users.danh.git.global.email;
 
       delta = {
         enable = true;
