@@ -27,6 +27,7 @@ in {
         ".DS_Store"
         ".direnv"
         ".envrc"
+        ".shell.nix"
         ".swp"
         ".tool-versions"
         ".venv"
