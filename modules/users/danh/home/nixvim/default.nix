@@ -13,7 +13,8 @@ in {
     ./treesitter.nix
   ];
   config = lib.mkIf enabled {
-    programs.fish.shellAliases = { vim = "nvim"; };
+    home.sessionVariables.EDITOR = "nvim";
+    home.shellAliases = { vim = "nvim"; };
 
     programs.nixvim = {
       enable = true;
