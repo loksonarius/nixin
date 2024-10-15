@@ -1,5 +1,7 @@
-{ config, lib, ... }:
-let enabled = config.nixin.users.danh.enable;
+{ config, lib, system, ... }:
+let
+  enabled = config.nixin.users.danh.enable;
+  isDarwin = lib.strings.hasSuffix "darwin" system;
 in {
   config = lib.mkIf enabled {
     programs.nixvim.plugins.lsp = {
@@ -9,12 +11,13 @@ in {
         ansiblels.enable = true;
         clangd.enable = true;
         dockerls.enable = true;
-        gdscript.enable = true;
+        # the godot package provided by nixpkgs does not compile on Darwin
+        gdscript.enable = !isDarwin;
         gopls.enable = true;
         jsonls.enable = true;
-        lua-ls.enable = true;
+        lua_ls.enable = true;
         pylsp.enable = true;
-        rust-analyzer = {
+        rust_analyzer = {
           enable = true;
           installCargo = true;
           installRustc = true;
