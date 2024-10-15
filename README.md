@@ -51,6 +51,15 @@ installation.
 Entry point for the whole thing, this is where all configurations can be built
 from.
 
+Notably different (wrong? probably!) from expectations for flakes, is that to
+enable system-agnostic output selection for nix-darwin and home-manager
+configurations, I've opted to set
+`packages.${system}.{home,darwin}Configurations` for each supported system.
+
+Really the benefit here is being able to switch to a specific home-manager
+configuration using the same flake output name regardless of whether I'm on
+NixOS or MacOS.
+
 ### modules/
 
 The sub-directories here are my classification for "role" types. This is purely

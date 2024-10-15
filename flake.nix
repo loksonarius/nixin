@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
@@ -11,61 +12,64 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, home-manager, nixvim, nixpkgs }:
-    let
-      system = "aarch64-darwin";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    in {
-      darwinConfigurations = {
-        "danh@keylime" = nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit pkgs system; };
-          modules = [
-            ./modules/users/darwin.nix
-            {
-              nixin.users.danh.enable = true;
-              nixin.users.danh.host = "keylime";
-            }
-          ];
+  outputs =
+    inputs@{ self, nixvim, home-manager, nix-darwin, flake-utils, nixpkgs }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
         };
 
-        "danh@okra" = nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit pkgs system; };
-          modules = [
-            ./modules/users/darwin.nix
-            {
-              nixin.users.danh.enable = true;
-              nixin.users.danh.host = "okra";
-            }
-          ];
-        };
-      };
+        lib = pkgs.lib;
+        isDarwin = lib.strings.hasSuffix "darwin" system;
+      in {
+        packages.homeConfigurations = {
+          "danh@home" = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = { inherit pkgs system; };
+            modules = [
+              nixvim.homeManagerModules.nixvim
+              ./modules/users/home.nix
+              { nixin.users.danh.enable = true; }
+            ];
+          };
 
-      homeConfigurations = {
-        "danh@home" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = { inherit pkgs system; };
-          modules = [
-            nixvim.homeManagerModules.nixvim
-            ./modules/users/home.nix
-            { nixin.users.danh.enable = true; }
-          ];
+          "danh@work" = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = { inherit pkgs system; };
+            modules = [
+              nixvim.homeManagerModules.nixvim
+              ./modules/users/home.nix
+              {
+                nixin.users.danh.enable = true;
+                nixin.users.danh.git.global.email = "dan.herrera@lambdal.com";
+              }
+            ];
+          };
         };
 
-        "danh@work" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = { inherit pkgs system; };
-          modules = [
-            nixvim.homeManagerModules.nixvim
-            ./modules/users/home.nix
-            {
-              nixin.users.danh.enable = true;
-              nixin.users.danh.git.global.email = "dan.herrera@lambdal.com";
-            }
-          ];
+        packages.darwinConfigurations = lib.attrsets.optionalAttrs isDarwin {
+          "danh@keylime" = nix-darwin.lib.darwinSystem {
+            specialArgs = { inherit pkgs system; };
+            modules = [
+              ./modules/users/darwin.nix
+              {
+                nixin.users.danh.enable = true;
+                nixin.users.danh.host = "keylime";
+              }
+            ];
+          };
+          "danh@okra" = nix-darwin.lib.darwinSystem {
+            specialArgs = { inherit pkgs system; };
+            modules = [
+              ./modules/users/darwin.nix
+              {
+                nixin.users.danh.enable = true;
+                nixin.users.danh.host = "okra";
+              }
+            ];
+          };
         };
-      };
-    };
+      });
 }
