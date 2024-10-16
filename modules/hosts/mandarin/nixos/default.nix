@@ -7,6 +7,7 @@ in {
   config = lib.mkIf enabled {
     system.stateVersion = "23.11";
     nixpkgs.config.allowUnfree = true;
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
     boot = {
       loader = {
@@ -54,8 +55,11 @@ in {
 
     environment.systemPackages = [
       pkgs.firefox
+      pkgs.git
       pkgs.vim
       pkgs.wget
     ];
+
+    users.mutableUsers = false;
   };
 }

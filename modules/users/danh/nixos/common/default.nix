@@ -7,7 +7,7 @@ in {
       name = "danh";
       extraGroups = [ "networkmanager" "wheel"];
       description = "Dan Herrera";
-      home = "/Users/danh";
+      home = "/home/danh";
       isNormalUser = true;
       packages = [ pkgs.fish ];
       shell = pkgs.fish;
