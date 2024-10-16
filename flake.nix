@@ -4,16 +4,17 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs =
-    inputs@{ self, nixvim, home-manager, nix-darwin, flake-utils, nixpkgs }:
+    inputs@{ self, nixos-hardware, nix-darwin, nixvim, home-manager, flake-utils, nixpkgs }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -23,6 +24,7 @@
 
         lib = pkgs.lib;
         isDarwin = lib.strings.hasSuffix "darwin" system;
+        isLinux = lib.strings.hasSuffix "linux" system;
       in {
         packages.homeConfigurations = {
           "danh@home" = home-manager.lib.homeManagerConfiguration {
@@ -68,6 +70,22 @@
               {
                 nixin.users.danh.enable = true;
                 nixin.users.danh.host = "okra";
+              }
+            ];
+          };
+        };
+
+
+        packages.nixosConfigurations = lib.attrsets.optionalAttrs isLinux {
+          "mandarin" = nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [
+              nixos-hardware.nixosModules.framework-12th-gen-intel
+              ./modules/users/nixos.nix
+              ./modules/hosts/nixos.nix
+              {
+                nixin.users.danh.enable = true;
+                nixin.hosts.mandarin.enable = true;
               }
             ];
           };
