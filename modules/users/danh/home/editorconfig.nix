@@ -68,6 +68,12 @@ in {
           trim_trailing_whitespace = true;
         };
 
+        "{JUSTFILE,.justfile,Justfile,justfile}" = {
+          indent_size = 2;
+          indent_style = "space";
+          trim_trailing_whitespace = true;
+        };
+
         "*.nix" = {
           indent_size = 2;
           indent_style = "space";
