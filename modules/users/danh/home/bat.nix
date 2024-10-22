@@ -5,7 +5,7 @@ in {
     programs.bat = {
       enable = true;
       config = {
-        theme = "OneHalfDark";
+        theme = "base16-256";
         wrap = "never";
       };
     };

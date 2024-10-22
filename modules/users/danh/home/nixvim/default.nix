@@ -20,7 +20,14 @@ in {
       enable = true;
       editorconfig.enable = true;
       clipboard.register = "unnamedplus";
-      colorschemes.onedark.enable = true;
+    };
+
+    programs.nixvim.colorschemes.catppuccin = {
+      enable = true;
+      settings = {
+        background.light = "latte";
+        background.dark = "mocha";
+      };
     };
 
     programs.nixvim.plugins = {
@@ -85,9 +92,6 @@ in {
       indent_blankline_filetype_exclude = "{ 'help', 'packer' }";
       indent_blankline_buftype_exclude = "{ 'terminal', 'nofile' }";
       indent_blankline_show_trailing_blankline_indent = false;
-
-      # Use native-terminal background
-      onedark_transparent_background = true;
     };
 
     programs.nixvim.keymaps = [
@@ -99,6 +103,26 @@ in {
           noremap = true;
           silent = true;
         };
+      }
+
+      # Set background color
+      {
+        action = "<cmd>set background=light<CR>";
+        key = "<leader>bl";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+        mode = "n";
+      }
+      {
+        action = "<cmd>set background=dark<CR>";
+        key = "<leader>bd";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+        mode = "n";
       }
 
       # Handle word wrapping when moving across lines
