@@ -22,6 +22,7 @@ in {
     ./fonts.nix
     ./gh.nix
     ./git.nix
+    ./iterm2
     ./kubectl.nix
     ./lsd.nix
     ./misc-pkgs.nix
