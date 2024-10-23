@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let enabled = config.nixin.users.danh.enable;
 in {
   config = lib.mkIf enabled {
@@ -7,38 +7,63 @@ in {
       escapeTime = 10;
       keyMode = "vi";
       mouse = true;
-      terminal = "screen-256color";
+      terminal = "tmux-256color";
+      shell = "${pkgs.fish}/bin/fish";
+      sensibleOnTop = false;
+
+      plugins = [{
+        plugin = pkgs.tmuxPlugins.catppuccin.overrideAttrs (_: {
+          src = pkgs.fetchFromGitHub {
+            owner = "catppuccin";
+            repo = "tmux";
+            rev = "a3df709c68601abfee01bf39417d50fb421452d0";
+            sha256 = "sha256-4SDbUYTgurXnW7YTzPDqe13scDF3Y+N8Trd3zGeWFwA=";
+          };
+        });
+        extraConfig = lib.concatStringsSep "\n" [
+          ''set -g @catppuccin_flavour "macchiato"''
+          ''set -g @catppuccin_window_status_style "rounded"''
+        ];
+      }];
+
       extraConfig = lib.concatStringsSep "\n" [
         "# Vim Keybindings"
         "bind -T copy-mode-vi v send -X begin-selection"
         "bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'pbcopy'"
+
         "# Use current path in new panes"
         ''bind '"' split-window -c "#{pane_current_path}"''
         ''bind % split-window -h -c "#{pane_current_path}"''
         ''bind c new-window -c "#{pane_current_path}"''
+
         "# Renumber windows on upon closing one"
         "set -g renumber-windows on"
-        "# Soften status bar color"
-        "set -g status-bg '#282c34'"
-        "set -g status-fg '#848b98'"
-        "# Move statusbar to top"
+
+        "# Configure statusbar"
+        "set -g status-right-length 100"
+        "set -g status-left-length 100"
+        ''set -g status-left ""''
+        ''set -g status-right "#{E:@catppuccin_status_application}"''
+        ''set -agF status-right "#{E:@catppuccin_status_host}"''
+        ''set -agF status-right "#{E:@catppuccin_status_date_time}"''
         "set-option -g status-position top"
-        "# Center window list"
-        "set -g status-justify centre"
-        "# Simplify statusbar"
-        ''set-window-option -g status-left "->> "''
-        ''set-window-option -g status-right " %H:%M %d-%b-%y "''
+
         "# Big pane-resizing key binds"
         "bind-key -r -T prefix C-Up    resize-pane -U 15"
         "bind-key -r -T prefix C-Down  resize-pane -D 15"
         "bind-key -r -T prefix C-Left  resize-pane -L 15"
         "bind-key -r -T prefix C-Right resize-pane -R 15"
+
+        "# Reload config key bind"
+        "bind-key -r -T prefix r source ~/.config/tmux/tmux.conf"
+
+        "# Start windows and panes at 1, not 0"
+        "set -g base-index 1"
+        "set -g pane-base-index 1"
+        "set-window-option -g pane-base-index 1"
+
         "# Increase window for repeated commands"
         "set -g repeat-time 1000"
-        "# Rename windows with their path's basename"
-        "set-option -g automatic-rename on"
-        ''
-          set-option -g automatic-rename-format '#[fg=white,bold]#{pane_current_command} #[fg=white]#(echo "#{pane_current_path}" | rev | cut -d'/' -f-2 | rev)''
       ];
     };
 
