@@ -20,6 +20,16 @@
           example = "danh@shew.io";
         };
       };
+
+      extra_pkgs = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        description = ''
+          List of misc nix pkgs to install.
+        '';
+        default = [ ];
+        example = "[ pkgs.awscli2 ]";
+      };
+
     };
   };
 }

@@ -6,4 +6,8 @@ let
     [ pkgs.devbox pkgs.fd pkgs.jq pkgs.openssh pkgs.teleport pkgs.wget ];
   darwinPkgs =
     if isDarwin then [ pkgs.gnutar pkgs.openssh pkgs.unixtools.watch ] else [ ];
-in { config = lib.mkIf enabled { home.packages = commonPkgs ++ darwinPkgs; }; }
+  extraPkgs = config.nixin.users.danh.extra_pkgs;
+in {
+  config =
+    lib.mkIf enabled { home.packages = commonPkgs ++ darwinPkgs ++ extraPkgs; };
+}

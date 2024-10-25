@@ -44,6 +44,7 @@
               {
                 nixin.users.danh.enable = true;
                 nixin.users.danh.git.global.email = "dan.herrera@lambdal.com";
+                nixin.users.danh.extra_pkgs = [ pkgs.awscli2 ];
               }
             ];
           };
