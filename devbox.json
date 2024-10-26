@@ -1,11 +1,14 @@
 {
-	"$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.3/.schema/devbox.schema.json",
-	"packages": [
-		"just"
-	],
-	"shell": {
-		"init_hook": [
-			"just --completions bash"
-		],
-	}
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.3/.schema/devbox.schema.json",
+  "packages": [
+    "just",
+    "age@latest",
+    "nixfmt@latest",
+    "age-plugin-yubikey@latest",
+  ],
+  "shell": {
+    "init_hook": [
+      "eval (just --completions bash)",
+    ],
+  },
 }

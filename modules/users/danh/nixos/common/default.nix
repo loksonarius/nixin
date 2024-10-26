@@ -1,11 +1,14 @@
 { config, lib, pkgs, system, ... }:
 let
+  host = config.nixin.users.danh.host;
+  passwordSecret = config.age.secrets."danh_${host}_password";
   enabled = config.nixin.users.danh.enable;
 in {
   config = lib.mkIf enabled {
     users.users.danh = {
       name = "danh";
-      extraGroups = [ "networkmanager" "wheel"];
+      passwordFile = passwordSecret.path;
+      extraGroups = [ "networkmanager" "wheel" ];
       description = "Dan Herrera";
       home = "/home/danh";
       isNormalUser = true;

@@ -51,7 +51,7 @@ in {
           indent_size = 2;
         };
 
-        "*.{yaml,yml}" = {
+        "*.{yaml,yml,json}" = {
           indent_style = "space";
           indent_size = 2;
         };
@@ -69,7 +69,7 @@ in {
         };
 
         "{JUSTFILE,.justfile,Justfile,justfile}" = {
-          indent_size = 2;
+          indent_size = 4;
           indent_style = "space";
           trim_trailing_whitespace = true;
         };

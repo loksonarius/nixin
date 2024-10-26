@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
-let
-  enabled = config.nixin.hosts.mandarin.enable;
+let enabled = config.nixin.hosts.mandarin.enable;
 in {
   imports = [ ./../options.nix ./hardware-configuration.nix ];
 
@@ -14,7 +13,8 @@ in {
         systemd-boot.enable = true;
         efi.canTouchEfiVariables = true;
       };
-      initrd.luks.devices."luks-b9512147-44bc-4336-b74d-f551fdb0f624".device = "/dev/disk/by-uuid/b9512147-44bc-4336-b74d-f551fdb0f624";
+      initrd.luks.devices."luks-b9512147-44bc-4336-b74d-f551fdb0f624".device =
+        "/dev/disk/by-uuid/b9512147-44bc-4336-b74d-f551fdb0f624";
     };
 
     networking.hostName = "mandarin"; # Define your hostname.
@@ -53,12 +53,9 @@ in {
       pulse.enable = true;
     };
 
-    environment.systemPackages = [
-      pkgs.firefox
-      pkgs.git
-      pkgs.vim
-      pkgs.wget
-    ];
+    environment.systemPackages = [ pkgs.firefox pkgs.git pkgs.vim pkgs.wget ];
+
+    services.pcscd.enable = true;
 
     users.mutableUsers = false;
   };
