@@ -37,5 +37,9 @@ in {
     home.homeDirectory = homeDir;
     home.stateVersion = "23.05";
     programs.home-manager.enable = true;
+
+    # default-theme programs where possible
+    catppuccin.flavor = "mocha";
+    catppuccin.enable = true;
   };
 }

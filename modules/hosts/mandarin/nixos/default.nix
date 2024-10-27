@@ -41,6 +41,7 @@ in {
       desktopManager.plasma5.enable = true;
     };
     services.displayManager.sddm.enable = true;
+    services.displayManager.sddm.package = pkgs.kdePackages.sddm;
 
     services.printing.enable = true;
 

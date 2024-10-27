@@ -11,6 +11,9 @@ in {
       shell = "${pkgs.fish}/bin/fish";
       sensibleOnTop = false;
 
+      # need some manual control over plugin version and pre-run config
+      catppuccin.enable = false;
+
       plugins = [{
         plugin = pkgs.tmuxPlugins.catppuccin.overrideAttrs (_: {
           src = pkgs.fetchFromGitHub {
