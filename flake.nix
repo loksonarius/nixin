@@ -4,16 +4,22 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    secrets.url = "git+ssh://git@github.com/loksonarius/nixin-secrets.git";
+    secrets.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    inputs@{ self, nixvim, home-manager, nix-darwin, flake-utils, nixpkgs }:
+  outputs = inputs@{ self, nixos-hardware, nix-darwin, nixvim, home-manager
+    , agenix, secrets, flake-utils, nixpkgs }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -23,6 +29,7 @@
 
         lib = pkgs.lib;
         isDarwin = lib.strings.hasSuffix "darwin" system;
+        isLinux = lib.strings.hasSuffix "linux" system;
       in {
         packages.homeConfigurations = {
           "danh@home" = home-manager.lib.homeManagerConfiguration {
@@ -68,6 +75,25 @@
               {
                 nixin.users.danh.enable = true;
                 nixin.users.danh.host = "okra";
+              }
+            ];
+          };
+        };
+
+        packages.nixosConfigurations = lib.attrsets.optionalAttrs isLinux {
+          "mandarin" = nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [
+              agenix.nixosModules.default
+              secrets.nixosModules.default
+              nixos-hardware.nixosModules.framework-12th-gen-intel
+              ./modules/users/nixos.nix
+              ./modules/hosts/nixos.nix
+              {
+                secrets.host = "mandarin";
+                nixin.users.danh.enable = true;
+                nixin.users.danh.host = "mandarin";
+                nixin.hosts.mandarin.enable = true;
               }
             ];
           };

@@ -8,9 +8,9 @@ with more knowledge than me can help me organize this mess better.
 
 ## Mental Model
 
-I'm currently really early on to developing my understanding of the various
-components of nix. For the sake of this repo, I have a working model I'll be
-explaining here.
+I'm currently early on to developing my understanding of the various components
+of nix. For the sake of this repo, I have a working model I'll be explaining
+here.
 
 ### Roles
 
@@ -32,13 +32,13 @@ home-manager `homeManagerConfiguration` would import the
 ### Outputs
 
 Because I intend to write configurations for more than just nixos hosts, I'm not
-following the common pattern of defining host configs with added user configs.
-The functional differences between even nix-darwwin and nixos configs alone is
-enough for me to not bother trying to have all my outputs represent "whole-host
-configurations". Instead, each output is a configuration specific to just the
-scope of the target tool. It is then up to the target environment to call the
-appropriate tools for each output configuration to produce the intended final
-host state.
+following the common pattern of defining host configs with included user
+configs. The functional differences between even nix-darwwin and nixos configs
+alone is enough for me to not bother trying to have all my outputs represent
+"whole-host configurations". Instead, each output is a configuration specific to
+just the scope of the target tool. It is then up to the target environment to
+call the appropriate tools for each output configuration to produce the intended
+final host state.
 
 So for the `danh` user on the the `keylime` host, the result would be calling
 `nix-darwin switch` as well as `home-manager switch` following a general nix
@@ -68,6 +68,8 @@ two role types:
 
 - `users`: represents a real person or service account that would have
 access to a host
+- `hosts`: represents a machine that would have some component about it
+configured by some nix tool
 
 Under each role, there will be module files for each configuration type
 needed to accomplish the role's intent. These will be directly imported up in
@@ -88,10 +90,17 @@ be `true` to actually render the config of whatever role modules were imported.
 ### if you're me
 
 ```bash
-nix run nix-darwin -- switch --flake .#danh@keylime
-# or .#danh@okra or whatever darwin target this is
+# for nix-darwin
+nix run nix-darwin -- switch --flake .#danh@keylime # or .#danh@okra or w.e.
 
-nix run home-manager -- switch --flake .#danh
+# for nixos
+sudo nixos-rebuild switch --flake .#mandarin # or w.e.
+
+# with nix installed on any system
+nix run home-manager -- switch --flake .#danh@home # or @work or w.e.
+
+# with devbox, direnv, and just installed
+just b mandarin # or any target flake, tool selected automatically
 ```
 
 ### if you're not

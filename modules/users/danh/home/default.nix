@@ -13,6 +13,7 @@ in {
   imports = [
     ./../options.nix
     ./ack.nix
+    ./age.nix
     ./amethyst.nix
     ./bat.nix
     ./colima.nix
