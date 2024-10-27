@@ -393,17 +393,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1729998309,
-        "narHash": "sha256-ULoVO5xQURyMeFW4XYWnhdn/RW10xDRDWeW1ynpF+Sw=",
+        "lastModified": 1730001809,
+        "narHash": "sha256-xIpHc7wI7IEWNmlxoZqMbghfF/f0w23hZUM/ZW3vkjE=",
         "ref": "refs/heads/main",
-        "rev": "29efe5c3dfe7149eeb80b5d72b02f004cb702bc9",
-        "revCount": 4,
+        "rev": "5e8c4ab9e979389bad63879cfeedadb13485d078",
+        "revCount": 3,
         "type": "git",
-        "url": "file:./secrets"
+        "url": "ssh://git@github.com/loksonarius/nixin-secrets.git"
       },
       "original": {
         "type": "git",
-        "url": "file:./secrets"
+        "url": "ssh://git@github.com/loksonarius/nixin-secrets.git"
       }
     },
     "systems": {

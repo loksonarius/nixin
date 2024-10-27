@@ -1,10 +1,12 @@
-alias b := build
-alias s := switch
-alias a := age
-
+# Build a flake by name
 build flake: (nix "build" flake)
 
+alias b := build
+
+# Activate a configuration flake by name
 switch flake: (nix "switch" flake)
+
+alias s := switch
 
 [private]
 nix task flake:
@@ -20,39 +22,19 @@ nix task flake:
     		echo 'Not a known flake'
     end
 
+[private]
 hm task flake:
     nix run home-manager -- {{ task }} --flake .#{{ flake }}
 
+[private]
 darwin task flake:
     nix run nix-darwin -- {{ task }} --flake .#{{ flake }}
 
-nixos task flake: submodules
+[private]
+nixos task flake:
     #!/usr/bin/env fish
     if [ '{{ task }}' = 'switch' ]
       sudo nixos-rebuild {{ task }} --flake .#{{ flake }}
     else
       nixos-rebuild {{ task }} --flake .#{{ flake }}
     end
-
-age +args: identity
-    cd secrets && \
-    nix run github:ryantm/agenix -- \
-        -i yubikey-identity.txt {{ args }}
-
-generate-identity name="agenix" slot="1" pin="once":
-    age-plugin-yubikey --generate \
-      --slot {{ slot }} \
-      --name {{ name }} \
-      --pin-policy {{ pin }} \
-      --touch-policy always
-
-[private]
-identity slot="1":
-    cd secrets && \
-    age-plugin-yubikey \
-      --identity \
-      --slot {{ slot }} > yubikey-identity.txt
-
-[private]
-submodules:
-    git submodule update --init --recursive

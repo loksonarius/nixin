@@ -14,10 +14,8 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    secrets.url = "git+file:./secrets";
+    secrets.url = "git+ssh://git@github.com/loksonarius/nixin-secrets.git";
     secrets.inputs.nixpkgs.follows = "nixpkgs";
-    # secrets.url =
-    #   "git+ssh://git@github.com/loksonarius/nixin-secrets.git?ref=main&shallow=1";
   };
 
   outputs = inputs@{ self, nixos-hardware, nix-darwin, nixvim, home-manager
