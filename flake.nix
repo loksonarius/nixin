@@ -13,10 +13,15 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    secrets.url = "git+file:./secrets";
+    secrets.inputs.nixpkgs.follows = "nixpkgs";
+    # secrets.url =
+    #   "git+ssh://git@github.com/loksonarius/nixin-secrets.git?ref=main&shallow=1";
   };
 
   outputs = inputs@{ self, nixos-hardware, nix-darwin, nixvim, home-manager
-    , agenix, flake-utils, nixpkgs }:
+    , agenix, secrets, flake-utils, nixpkgs }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -82,15 +87,14 @@
             inherit system;
             modules = [
               agenix.nixosModules.default
+              secrets.nixosModules.default
               nixos-hardware.nixosModules.framework-12th-gen-intel
               ./modules/users/nixos.nix
               ./modules/hosts/nixos.nix
               {
+                secrets.host = "mandarin";
                 nixin.users.danh.enable = true;
                 nixin.users.danh.host = "mandarin";
-                age.secrets.danh_mandarin_password.file =
-                  ../secrets/danh_mandarin_password.age;
-                age.identityPaths = [ ./secrets/yubikey-identity.nix ];
                 nixin.hosts.mandarin.enable = true;
               }
             ];
