@@ -8,6 +8,9 @@ in {
       xkb.variant = "";
     };
 
-    services.displayManager.sddm.enable = true;
+    services.displayManager.sddm = {
+      enable = true;
+      settings = { General.InputMethod = ""; };
+    };
   };
 }
