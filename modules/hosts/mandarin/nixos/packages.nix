@@ -2,6 +2,14 @@
 let enabled = config.nixin.hosts.mandarin.enable;
 in {
   config = lib.mkIf enabled {
-    environment.systemPackages = [ pkgs.firefox pkgs.git pkgs.vim pkgs.wget ];
+    environment.systemPackages = [
+      # we need a browser round here
+      pkgs.firefox
+
+      # escape hatch utils
+      pkgs.git
+      pkgs.vim
+      pkgs.wget
+    ];
   };
 }
