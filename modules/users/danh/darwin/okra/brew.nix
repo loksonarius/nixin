@@ -6,6 +6,5 @@ let
 in {
   config = lib.mkIf enabled {
     homebrew.casks = [ "1password" "1password-cli" "slack" ];
-
   };
 }
