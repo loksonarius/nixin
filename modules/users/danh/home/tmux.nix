@@ -23,6 +23,7 @@ in {
         extraConfig = lib.concatStringsSep "\n" [
           ''set -g @catppuccin_flavour "macchiato"''
           ''set -g @catppuccin_window_status_style "rounded"''
+          ''set -g @catppuccin_status_background "#{@thm_surface_2}"''
         ];
       }];
 
