@@ -4,12 +4,12 @@ let
     && lib.strings.hasSuffix "darwin" system;
 in {
   config = lib.mkIf enabled {
-    home.packages = [ pkgs.colima ];
+    home.packages = [ pkgs.colima pkgs.docker-client ];
     home.file.".colima/_templates/default.yaml".text = ''
       cpu: 4
       disk: 60
       memory: 8
-      runtime: containerd
+      runtime: docker
       kubernetes:
         enabled: true
         version: v1.30.2+k3s1
@@ -18,9 +18,6 @@ in {
       vmType: qemu
     '';
 
-    home.shellAliases = {
-      docker = "colima nerdctl";
-      nerdctl = "colima nerdctl";
-    };
+    home.shellAliases = { nerdctl = "colima nerdctl"; };
   };
 }
