@@ -117,6 +117,23 @@
               }
             ];
           };
+
+          "durian" = nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [
+              agenix.nixosModules.default
+              secrets.nixosModules.default
+              catppuccin.nixosModules.catppuccin
+              ./modules/users/nixos.nix
+              ./modules/hosts/nixos.nix
+              {
+                secrets.host = "durian";
+                nixin.users.danh.enable = true;
+                nixin.users.danh.host = "durian";
+                nixin.hosts.durian.enable = true;
+              }
+            ];
+          };
         };
       });
 }

@@ -3,10 +3,10 @@
     nixin.users.danh = {
       enable = lib.mkEnableOption "danh";
       host = lib.mkOption {
-        type =
-          lib.types.nullOr (lib.types.enum [ "keylime" "okra" "mandarin" ]);
+        type = lib.types.nullOr
+          (lib.types.enum [ "keylime" "okra" "mandarin" "durian" ]);
         description = ''
-          A target host to enable specific Darwin configuration for.
+          A target host to enable specific configurations for.
         '';
         example = "keylime";
       };
