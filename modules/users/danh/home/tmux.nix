@@ -11,6 +11,9 @@ in {
       shell = "${pkgs.fish}/bin/fish";
       sensibleOnTop = false;
 
+      # need some manual control over plugin version and pre-run config
+      catppuccin.enable = false;
+
       plugins = [{
         plugin = pkgs.tmuxPlugins.catppuccin.overrideAttrs (_: {
           src = pkgs.fetchFromGitHub {
@@ -65,6 +68,10 @@ in {
 
         "# Increase window for repeated commands"
         "set -g repeat-time 1000"
+
+        "# Enable True colors and focus events for neovim"
+        "set-option -a terminal-features 'xterm-256color:RGB'"
+        "set-option -g focus-events on"
       ];
     };
 

@@ -1,25 +1,42 @@
 {
-  description = "Example Darwin system flake";
+  description = "Kitchen sink of outputs used by nix ecosystem tools";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+    # Handy-dandy flake functions
     flake-utils.url = "github:numtide/flake-utils";
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Manage user dotfiles, configs, packages, and services
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Nixified config for neovim
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Shotgun blast catppuccin everywhere
+    catppuccin.url = "github:catppuccin/nix";
+
+    # Configure system preferences and manage brew
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Used to pull-in pre-made configs for laptops and some hardware combos
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    # Storing secrets in a whole other place
     secrets.url = "git+ssh://git@github.com/loksonarius/nixin-secrets.git";
     secrets.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Inject secrets as files in nixOS configs
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+
   };
 
-  outputs = inputs@{ self, nixos-hardware, nix-darwin, nixvim, home-manager
-    , agenix, secrets, flake-utils, nixpkgs }:
+  outputs = inputs@{ self, nixpkgs, flake-utils, home-manager, nixvim
+    , catppuccin, nix-darwin, nixos-hardware, secrets, agenix, }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -36,6 +53,7 @@
             inherit pkgs;
             extraSpecialArgs = { inherit pkgs system; };
             modules = [
+              catppuccin.homeManagerModules.catppuccin
               nixvim.homeManagerModules.nixvim
               ./modules/users/home.nix
               { nixin.users.danh.enable = true; }
@@ -46,6 +64,7 @@
             inherit pkgs;
             extraSpecialArgs = { inherit pkgs system; };
             modules = [
+              catppuccin.homeManagerModules.catppuccin
               nixvim.homeManagerModules.nixvim
               ./modules/users/home.nix
               {
@@ -87,6 +106,7 @@
               agenix.nixosModules.default
               secrets.nixosModules.default
               nixos-hardware.nixosModules.framework-12th-gen-intel
+              catppuccin.nixosModules.catppuccin
               ./modules/users/nixos.nix
               ./modules/hosts/nixos.nix
               {

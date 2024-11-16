@@ -24,6 +24,7 @@ in {
     ./gh.nix
     ./git.nix
     ./iterm2
+    ./kde
     ./kubectl.nix
     ./lsd.nix
     ./misc-pkgs.nix
@@ -37,5 +38,9 @@ in {
     home.homeDirectory = homeDir;
     home.stateVersion = "23.05";
     programs.home-manager.enable = true;
+
+    # default-theme programs where possible
+    catppuccin.flavor = "mocha";
+    catppuccin.enable = true;
   };
 }

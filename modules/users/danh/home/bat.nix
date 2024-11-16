@@ -4,10 +4,7 @@ in {
   config = lib.mkIf enabled {
     programs.bat = {
       enable = true;
-      config = {
-        theme = "base16-256";
-        wrap = "never";
-      };
+      config.wrap = "never";
     };
   };
 }
