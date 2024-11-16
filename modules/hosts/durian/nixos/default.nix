@@ -7,6 +7,7 @@
     ./boot.nix
     ./desktop.nix
     ./display.nix
+    ./gaming.nix
     ./locale.nix
     ./networking.nix
     ./nix.nix
