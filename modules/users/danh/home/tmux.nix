@@ -67,6 +67,10 @@ in {
 
         "# Increase window for repeated commands"
         "set -g repeat-time 1000"
+
+        "# Enable True colors and focus events for neovim"
+        "set-option -a terminal-features 'xterm-256color:RGB'"
+        "set-option -g focus-events on"
       ];
     };
 

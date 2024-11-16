@@ -24,7 +24,7 @@ in {
     ./gh.nix
     ./git.nix
     ./iterm2
-    ./kde.nix
+    ./kde
     ./kubectl.nix
     ./lsd.nix
     ./misc-pkgs.nix
