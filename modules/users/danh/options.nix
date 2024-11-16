@@ -31,6 +31,14 @@
         example = "[ pkgs.awscli2 ]";
       };
 
+      extra_groups = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        description = ''
+          List of extra groups to add for user.
+        '';
+        default = [ ];
+        example = ''[ "gamemode" ]'';
+      };
     };
   };
 }

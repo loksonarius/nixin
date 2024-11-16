@@ -4,7 +4,7 @@ in {
   config = lib.mkIf enabled {
     hardware.graphics = {
       enable = true;
-      enable32bit = true;
+      enable32Bit = true;
     };
 
     programs.gamemode.enable = true;
@@ -14,9 +14,12 @@ in {
       remotePlay.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
     };
-    programs.lutris.enable = true;
 
-    environment.systemPackages = [ pkgs.protonup ];
+    environment.systemPackages = [
+      pkgs.lutris
+      pkgs.protonup
+      (pkgs.discord.override { withVencord = true; })
+    ];
 
     environment.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS =

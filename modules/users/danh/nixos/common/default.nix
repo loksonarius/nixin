@@ -2,12 +2,13 @@
 let
   passwordSecret = config.age.secrets."danh_password";
   enabled = config.nixin.users.danh.enable;
+  extraGroups = config.nixin.users.danh.extra_groups;
 in {
   config = lib.mkIf enabled {
     users.users.danh = {
       name = "danh";
       hashedPasswordFile = passwordSecret.path;
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" ] ++ extraGroups;
       description = "Dan Herrera";
       home = "/home/danh";
       isNormalUser = true;
