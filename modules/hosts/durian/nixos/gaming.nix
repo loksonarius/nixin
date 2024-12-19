@@ -18,7 +18,9 @@ in {
     environment.systemPackages = [
       pkgs.lutris
       pkgs.protonup
-      (pkgs.discord.override { withVencord = true; })
+      # (pkgs.discord.override { withVencord = true; })
+      pkgs.discord
+      pkgs.webcord
     ];
 
     environment.sessionVariables = {

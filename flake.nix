@@ -132,6 +132,8 @@
                 nixin.users.danh.host = "durian";
                 nixin.users.danh.extra_groups = [ "gamemode" ];
                 nixin.hosts.durian.enable = true;
+                nixin.hosts.durian.extra_pkgs =
+                  [ pkgs.bottles pkgs.kdePackages.krdc ];
               }
             ];
           };
