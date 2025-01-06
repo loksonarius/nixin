@@ -137,7 +137,9 @@
                   pkgs.kdePackages.krdc
                   pkgs.obs-studio
                   pkgs.ffmpeg
+                  pkgs.solaar
                 ];
+                hardware.logitech.wireless.enable = true;
               }
             ];
           };
