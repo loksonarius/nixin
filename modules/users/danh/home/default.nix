@@ -29,6 +29,7 @@ in {
     ./lsd.nix
     ./misc-pkgs.nix
     ./nixvim
+    ./ssh.nix
     ./starship.nix
     ./tmux.nix
   ];
@@ -36,7 +37,7 @@ in {
   config = lib.mkIf enabled {
     home.username = "danh";
     home.homeDirectory = homeDir;
-    home.stateVersion = "23.05";
+    home.stateVersion = "25.05";
     programs.home-manager.enable = true;
 
     # default-theme programs where possible
