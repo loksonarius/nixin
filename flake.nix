@@ -148,6 +148,19 @@
             ];
           };
 
+          "basil" = nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [
+              agenix.nixosModules.default
+              secrets.nixosModules.default
+              ./modules/hosts/nixos.nix
+              {
+                secrets.host = "basil";
+                nixin.hosts.basil.enable = true;
+              }
+            ];
+          };
+
           "freshinstall" = nixpkgs.lib.nixosSystem {
             inherit system;
             modules = [

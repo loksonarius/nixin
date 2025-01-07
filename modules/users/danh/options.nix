@@ -4,7 +4,7 @@
       enable = lib.mkEnableOption "danh";
       host = lib.mkOption {
         type = lib.types.nullOr
-          (lib.types.enum [ "keylime" "okra" "mandarin" "durian" ]);
+          (lib.types.enum [ "basil" "keylime" "okra" "mandarin" "durian" ]);
         description = ''
           A target host to enable specific configurations for.
         '';

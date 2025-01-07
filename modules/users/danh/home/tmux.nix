@@ -33,7 +33,7 @@ in {
       extraConfig = lib.concatStringsSep "\n" [
         "# Vim Keybindings"
         "bind -T copy-mode-vi v send -X begin-selection"
-        "bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'pbcopy'"
+        "bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'wl-copy'"
 
         "# Use current path in new panes"
         ''bind '"' split-window -c "#{pane_current_path}"''
