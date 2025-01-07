@@ -41,7 +41,27 @@
 
   outputs = inputs@{ self, nixpkgs, flake-utils, home-manager, nixvim
     , catppuccin, nix-darwin, nixos-hardware, disko, secrets, agenix, }:
-    flake-utils.lib.eachDefaultSystem (system:
+    {
+      colmena = {
+        meta = { nixpkgs = import nixpkgs { system = "x86_64-linux"; }; };
+        "basil" = { pkgs, ... }: {
+          deployment = {
+            targetHost = "192.168.1.223";
+            targetUser = "root";
+          };
+
+          imports = [
+            agenix.nixosModules.default
+            secrets.nixosModules.default
+            ./modules/hosts/nixos.nix
+            {
+              secrets.host = "basil";
+              nixin.hosts.basil.enable = true;
+            }
+          ];
+        };
+      };
+    } // flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
           inherit system;

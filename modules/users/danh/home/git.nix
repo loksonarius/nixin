@@ -46,6 +46,9 @@ in {
         "github.com" = {
           hostname = "github.com";
           user = "git";
+          # requires ssh-add -K with smartcard plugged in
+          identityFile = "~/.ssh/id_ed25519_sk_rk_danh";
+          identitiesOnly = true;
         };
       };
     };

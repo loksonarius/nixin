@@ -25,7 +25,7 @@ nix task flake:
     		just hm '{{ task }}' '{{ flake }}'
     	case danh@keylime danh@okra
     		just darwin '{{ task }}' '{{ flake }}'
-    	case durian mandarin
+    	case basil durian mandarin
     		just nixos '{{ task }}' '{{ flake }}'
     	case '*'
     		echo 'Not a known flake'
