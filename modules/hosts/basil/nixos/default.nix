@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
 
     ./boot.nix
+    ./hardware-acceleration.nix
     ./locale.nix
     ./networking.nix
     ./nix.nix
