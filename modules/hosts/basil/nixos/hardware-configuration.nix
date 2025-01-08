@@ -6,7 +6,9 @@ in {
   config = lib.mkIf enabled {
     boot.initrd.availableKernelModules =
       [ "xhci_pci" "ahci" "usbhid" "sd_mod" "rtsx_usb_sdmmc" ];
-    boot.initrd.kernelModules = [ "dm-snapshot" ];
+    boot.initrd.kernelModules = [ "dm-snapshot" "nfs" ];
+    boot.initrd.supportedFilesystems = [ "nfs" ];
+    boot.supportedFilesystems = [ "nfs" ];
     boot.kernelModules = [ "kvm-intel" ];
     boot.extraModulePackages = [ ];
 

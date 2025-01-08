@@ -9,7 +9,9 @@
     ./networking.nix
     ./nix.nix
     ./packages.nix
+    ./services.nix
     ./ssh.nix
+    ./storage.nix
     ./users.nix
   ];
 }
