@@ -108,6 +108,24 @@ in {
             "/mnt/storage/usenet:/data/usenet"
           ];
         };
+
+        nginx-proxy = {
+          image = "jc21/nginx-proxy-manager:2.12.2";
+          hostname = "nginx-proxy";
+          autoStart = true;
+          ports = [ "80:80" "443:443" "81:81" ];
+          environment = {
+            PUID = "1025";
+            GUID = "100";
+            TZ = "America/New_York";
+          };
+          # user = "root:root";
+          volumes = [
+            "/mnt/containers/nginx-proxy:/data"
+            "/mnt/containers/nginx-proxy-letsencrypt:/etc/letsencrypt"
+          ];
+        };
+
       };
     };
 
