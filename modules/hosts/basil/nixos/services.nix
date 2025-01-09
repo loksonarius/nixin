@@ -109,21 +109,105 @@ in {
           ];
         };
 
-        nginx-proxy = {
-          image = "jc21/nginx-proxy-manager:2.12.2";
-          hostname = "nginx-proxy";
+        # TODO(danh): whip this out when container storage is local
+        # nginx-proxy = {
+        #   image = "jc21/nginx-proxy-manager:2.12.2";
+        #   hostname = "nginx-proxy";
+        #   autoStart = true;
+        #   ports = [ "80:80" "443:443" "81:81" ];
+        #   environment = {
+        #     PUID = "1025";
+        #     GUID = "100";
+        #     TZ = "America/New_York";
+        #   };
+        #   user = "root:root";
+        #   volumes = [
+        #     "/mnt/containers/nginx-proxy:/data"
+        #     "/mnt/containers/nginx-proxy-letsencrypt:/etc/letsencrypt"
+        #   ];
+        # };
+
+        prowlarr = {
+          image = "linuxserver/prowlarr:1.29.2";
+          hostname = "prowlarr";
           autoStart = true;
-          ports = [ "80:80" "443:443" "81:81" ];
+          ports = [ "9696:9696/tcp" ];
           environment = {
             PUID = "1025";
             GUID = "100";
             TZ = "America/New_York";
           };
-          # user = "root:root";
-          volumes = [
-            "/mnt/containers/nginx-proxy:/data"
-            "/mnt/containers/nginx-proxy-letsencrypt:/etc/letsencrypt"
-          ];
+          user = "root:root";
+          volumes = [ "/mnt/containers/prowlarr:/config" ];
+        };
+
+        radarr = {
+          image = "linuxserver/radarr:5.17.2";
+          hostname = "radarr";
+          autoStart = true;
+          ports = [ "7878:7878/tcp" ];
+          environment = {
+            PUID = "1025";
+            GUID = "100";
+            TZ = "America/New_York";
+          };
+          user = "root:root";
+          volumes = [ "/mnt/containers/radarr:/config" "/mnt/storage:/data" ];
+        };
+
+        sonarr = {
+          image = "linuxserver/sonarr:4.0.12";
+          hostname = "sonarr";
+          autoStart = true;
+          ports = [ "8989:8989/tcp" ];
+          environment = {
+            PUID = "1025";
+            GUID = "100";
+            TZ = "America/New_York";
+          };
+          user = "root:root";
+          volumes = [ "/mnt/containers/sonarr:/config" "/mnt/storage:/data" ];
+        };
+
+        bazarr = {
+          image = "linuxserver/bazarr:1.5.1";
+          hostname = "bazarr";
+          autoStart = true;
+          ports = [ "6767:6767/tcp" ];
+          environment = {
+            PUID = "1025";
+            GUID = "100";
+            TZ = "America/New_York";
+          };
+          user = "root:root";
+          volumes = [ "/mnt/containers/bazarr:/config" "/mnt/storage:/data" ];
+        };
+
+        flaresolverr = {
+          image = "flaresolverr/flaresolverr:v3.3.21";
+          hostname = "flaresolverr";
+          autoStart = true;
+          ports = [ "8191:8191/tcp" ];
+          environment = {
+            PUID = "1025";
+            GUID = "100";
+            TZ = "America/New_York";
+          };
+          user = "root:root";
+        };
+
+        jellyseerr = {
+          image = "fallenbagel/jellyseerr:2.2.3";
+          hostname = "jellyseerr";
+          autoStart = true;
+          ports = [ "5055:5055/tcp" ];
+          environment = {
+            PUID = "1025";
+            GUID = "100";
+            TZ = "America/New_York";
+          };
+          user = "root:root";
+          volumes = [ "/mnt/containers/jellyseerr:/app/config" ];
         };
 
       };
@@ -133,5 +217,10 @@ in {
     systemd.services.podman-gluetun = systemdWaitForMounts;
     systemd.services.podman-qbittorrent = systemdWaitForMounts;
     systemd.services.podman-sabnzbd = systemdWaitForMounts;
+    systemd.services.podman-prowlarr = systemdWaitForMounts;
+    systemd.services.podman-radarr = systemdWaitForMounts;
+    systemd.services.podman-sonarr = systemdWaitForMounts;
+    systemd.services.podman-bazarr = systemdWaitForMounts;
+    systemd.services.podman-jellyseerr = systemdWaitForMounts;
   };
 }
