@@ -27,7 +27,12 @@ in {
             "--device=/dev/dri/renderD128:/dev/dri/renderD128"
             "--group-add=303"
           ];
-          user = "1025:100";
+          environment = {
+            PUID = "1025";
+            GUID = "100";
+            TZ = "America/New_York";
+          };
+          user = "root:root";
           volumes = [
             "/mnt/containers/jellyfin/config:/config"
             "/mnt/containers/jellyfin/cache:/cache"
@@ -47,6 +52,8 @@ in {
             # dependent services
             # qbittorrent
             "8090:8090"
+            # sabnzbd
+            "8080:8080"
           ];
           extraOptions =
             [ "--cap-add=NET_ADMIN" "--device=/dev/net/tun:/dev/net/tun" ];
@@ -61,7 +68,6 @@ in {
           };
           environmentFiles = [ config.age.secrets."gluetun_env".path ];
           labels = { "com.centurylinklabs.watchtower.enable" = "false"; };
-          # user = "1025:100";
           user = "root:root";
           volumes = [ "/mnt/containers/gluetun:/gluetun" ];
         };
@@ -78,11 +84,28 @@ in {
             TZ = "America/New_York";
             WEBUI_PORT = "8090";
           };
-          # user = "1025:100";
           user = "root:root";
           volumes = [
             "/mnt/containers/qbittorrent:/config"
             "/mnt/storage/torrents:/data/torrents"
+          ];
+        };
+
+        sabnzbd = {
+          image = "linuxserver/sabnzbd:4.4.1";
+          hostname = "sabnzbd";
+          dependsOn = [ "gluetun" ];
+          autoStart = true;
+          extraOptions = [ "--network=container:gluetun" ];
+          environment = {
+            PUID = "1025";
+            GUID = "100";
+            TZ = "America/New_York";
+          };
+          user = "root:root";
+          volumes = [
+            "/mnt/containers/sabnzbd:/config"
+            "/mnt/storage/usenet:/data/usenet"
           ];
         };
       };
@@ -90,6 +113,7 @@ in {
 
     systemd.services.podman-jellyfin = systemdWaitForMounts;
     systemd.services.podman-gluetun = systemdWaitForMounts;
-    # systemd.services.podman-qbittorrent = systemdWaitForMounts;
+    systemd.services.podman-qbittorrent = systemdWaitForMounts;
+    systemd.services.podman-sabnzbd = systemdWaitForMounts;
   };
 }
