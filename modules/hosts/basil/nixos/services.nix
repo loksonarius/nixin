@@ -237,6 +237,20 @@ in {
           volumes = [ "/mnt/containers/jellyseerr:/app/config" ];
         };
 
+        recyclarr = {
+          image = "recyclarr/recyclarr:7.4.0";
+          hostname = "recyclarr";
+          autoStart = true;
+          environment = {
+            PUID = "0";
+            PGID = "0";
+            TZ = "America/New_York";
+            RECYCLARR_CREATE_CONFIG = "true";
+          };
+          user = "root:root";
+          volumes = [ "/mnt/containers/recyclarr:/config" ];
+        };
+
       };
     };
 
@@ -244,10 +258,13 @@ in {
     systemd.services.podman-gluetun = systemdWaitForMounts;
     systemd.services.podman-qbittorrent = systemdWaitForMounts;
     systemd.services.podman-sabnzbd = systemdWaitForMounts;
+    systemd.services.podman-pihole = systemdWaitForMounts;
+    systemd.services.podman-nginx-proxy = systemdWaitForMounts;
     systemd.services.podman-prowlarr = systemdWaitForMounts;
     systemd.services.podman-radarr = systemdWaitForMounts;
     systemd.services.podman-sonarr = systemdWaitForMounts;
     systemd.services.podman-bazarr = systemdWaitForMounts;
     systemd.services.podman-jellyseerr = systemdWaitForMounts;
+    systemd.services.podman-recyclarr = systemdWaitForMounts;
   };
 }
