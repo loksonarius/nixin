@@ -109,7 +109,34 @@ in {
           ];
         };
 
-        # TODO(danh): whip this out when container storage is local
+        pihole = {
+          image = "pihole/pihole:2024.07.0";
+          hostname = "pihole";
+          autoStart = true;
+          ports = [
+            # competing with aardvark-dns without a bind IP
+            "192.168.1.223:53:53/tcp"
+            "192.168.1.223:53:53/udp"
+            # webui
+            "8070:80"
+          ];
+          environment = {
+            PUID = "0";
+            PGID = "0";
+            TZ = "America/New_York";
+            # needed as we're running on the bridge network
+            DNSMASQ_LISTENING = "all";
+            # bruh
+            # https://github.com/pi-hole/docker-pi-hole/issues/328#issuecomment-1185603539
+            DNSMASQ_USER = "root";
+          };
+          user = "root:root";
+          volumes = [
+            "/mnt/containers/pihole/config:/etc/pihole"
+            "/mnt/containers/pihole/dnsmasq.d:/etc/dnsmasq.d"
+          ];
+        };
+
         nginx-proxy = {
           image = "jc21/nginx-proxy-manager:2.12.2";
           hostname = "nginx-proxy";
