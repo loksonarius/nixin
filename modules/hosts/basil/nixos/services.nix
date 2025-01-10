@@ -28,8 +28,8 @@ in {
             "--group-add=303"
           ];
           environment = {
-            # PUID = "1025";
-            # GUID = "100";
+            PUID = "0";
+            PGID = "0";
             TZ = "America/New_York";
           };
           user = "root:root";
@@ -58,8 +58,8 @@ in {
           extraOptions =
             [ "--cap-add=NET_ADMIN" "--device=/dev/net/tun:/dev/net/tun" ];
           environment = {
-            # PUID = "1025";
-            # GUID = "100";
+            PUID = "0";
+            PGID = "0";
             TZ = "America/New_York";
             UPDATER_PERIOD = "24h";
             HTTPPROXY = "off";
@@ -79,8 +79,8 @@ in {
           autoStart = true;
           extraOptions = [ "--network=container:gluetun" ];
           environment = {
-            # PUID = "1025";
-            # GUID = "100";
+            PUID = "0";
+            PGID = "0";
             TZ = "America/New_York";
             WEBUI_PORT = "8090";
           };
@@ -98,8 +98,8 @@ in {
           autoStart = true;
           extraOptions = [ "--network=container:gluetun" ];
           environment = {
-            # PUID = "1025";
-            # GUID = "100";
+            PUID = "0";
+            PGID = "0";
             TZ = "America/New_York";
           };
           user = "root:root";
@@ -116,8 +116,8 @@ in {
           autoStart = true;
           ports = [ "80:80" "443:443" "81:81" ];
           environment = {
-            # PUID = "1025";
-            # GUID = "100";
+            PUID = "0";
+            PGID = "0";
             TZ = "America/New_York";
           };
           user = "root:root";
@@ -133,8 +133,8 @@ in {
           autoStart = true;
           ports = [ "9696:9696/tcp" ];
           environment = {
-            PUID = "1025";
-            GUID = "100";
+            PUID = "0";
+            PGID = "0";
             TZ = "America/New_York";
           };
           user = "root:root";
@@ -147,8 +147,8 @@ in {
           autoStart = true;
           ports = [ "7878:7878/tcp" ];
           environment = {
-            # PUID = "1025";
-            # GUID = "100";
+            PUID = "0";
+            PGID = "0";
             TZ = "America/New_York";
           };
           user = "root:root";
@@ -161,8 +161,8 @@ in {
           autoStart = true;
           ports = [ "8989:8989/tcp" ];
           environment = {
-            # PUID = "1025";
-            # GUID = "100";
+            PUID = "0";
+            PGID = "0";
             TZ = "America/New_York";
           };
           user = "root:root";
@@ -175,8 +175,8 @@ in {
           autoStart = true;
           ports = [ "6767:6767/tcp" ];
           environment = {
-            # PUID = "1025";
-            # GUID = "100";
+            PUID = "0";
+            PGID = "0";
             TZ = "America/New_York";
           };
           user = "root:root";
@@ -189,8 +189,8 @@ in {
           autoStart = true;
           ports = [ "8191:8191/tcp" ];
           environment = {
-            # PUID = "1025";
-            # GUID = "100";
+            PUID = "0";
+            PGID = "0";
             TZ = "America/New_York";
           };
           user = "root:root";
@@ -202,8 +202,8 @@ in {
           autoStart = true;
           ports = [ "5055:5055/tcp" ];
           environment = {
-            # PUID = "1025";
-            # GUID = "100";
+            PUID = "0";
+            PGID = "0";
             TZ = "America/New_York";
           };
           user = "root:root";
