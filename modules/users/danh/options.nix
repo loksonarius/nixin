@@ -3,8 +3,14 @@
     nixin.users.danh = {
       enable = lib.mkEnableOption "danh";
       host = lib.mkOption {
-        type = lib.types.nullOr
-          (lib.types.enum [ "basil" "keylime" "okra" "mandarin" "durian" ]);
+        type = lib.types.nullOr (lib.types.enum [
+          "basil"
+          "nutmeg"
+          "keylime"
+          "okra"
+          "mandarin"
+          "durian"
+        ]);
         description = ''
           A target host to enable specific configurations for.
         '';

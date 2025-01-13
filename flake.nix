@@ -60,6 +60,23 @@
             }
           ];
         };
+
+        "nutmeg" = { pkgs, ... }: {
+          deployment = {
+            targetHost = "192.168.1.113";
+            targetUser = "root";
+          };
+
+          imports = [
+            agenix.nixosModules.default
+            secrets.nixosModules.default
+            ./modules/hosts/nixos.nix
+            {
+              secrets.host = "nutmeg";
+              nixin.hosts.nutmeg.enable = true;
+            }
+          ];
+        };
       };
     } // flake-utils.lib.eachDefaultSystem (system:
       let
@@ -181,12 +198,26 @@
             ];
           };
 
+          "nutmeg" = nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [
+              agenix.nixosModules.default
+              secrets.nixosModules.default
+              ./modules/hosts/nixos.nix
+              {
+                secrets.host = "nutmeg";
+                nixin.hosts.nutmeg.enable = true;
+              }
+            ];
+          };
+
           "freshinstall" = nixpkgs.lib.nixosSystem {
             inherit system;
             modules = [
               disko.nixosModules.disko
               ./modules/freshinstall/configuration.nix
               ./modules/freshinstall/hardware-configuration.nix
+              { disko.devices.disk.disk1.device = "/dev/nvme0n1"; }
             ];
           };
         };
