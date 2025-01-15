@@ -9,13 +9,13 @@ in {
       {
         type = "nfs";
         mountConfig = { Options = "noatime"; };
-        what = "mrnas:/volume1/containers";
+        what = "192.168.1.219:/volume1/containers";
         where = "/mnt/containers";
       }
       {
         type = "nfs";
         mountConfig = { Options = "noatime"; };
-        what = "mrnas:/volume1/storage";
+        what = "192.168.1.219:/volume1/storage";
         where = "/mnt/storage";
       }
     ];

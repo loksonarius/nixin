@@ -115,8 +115,8 @@ in {
           autoStart = true;
           ports = [
             # competing with aardvark-dns without a bind IP
-            "192.168.1.105:53:53/tcp"
-            "192.168.1.105:53:53/udp"
+            "192.168.1.113:53:53/tcp"
+            "192.168.1.113:53:53/udp"
             # webui
             "8070:80"
           ];

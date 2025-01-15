@@ -455,10 +455,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1736912958,
-        "narHash": "sha256-iwqILd0tPmUf+NsIRcRG7L2Ix4TArj4cOJeaAd0UUcQ=",
+        "lastModified": 1736914401,
+        "narHash": "sha256-ZFxob4YGA0I+qYr4BMS6qqQKfu56xSWxZ90ECY+L9CA=",
         "ref": "refs/heads/main",
-        "rev": "47ff389a0cd496c3911f81ef0c4d29f4540f4053",
+        "rev": "cb249bffeaf5f826dce7dffb409217225f1800a3",
         "revCount": 9,
         "type": "git",
         "url": "ssh://git@github.com/loksonarius/nixin-secrets.git"
