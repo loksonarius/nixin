@@ -23,10 +23,7 @@ in {
           autoStart = true;
           ports =
             [ "7359:7359/tcp" "7359:7359/udp" "8096:8096/tcp" "8920:8920/tcp" ];
-          extraOptions = [
-            "--device=/dev/dri/renderD128:/dev/dri/renderD128"
-            "--group-add=303"
-          ];
+          extraOptions = [ "--device=nvidia.com/gpu=all" ];
           environment = {
             PUID = "0";
             PGID = "0";
