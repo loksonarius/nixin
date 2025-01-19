@@ -238,6 +238,22 @@ in {
           user = "root:root";
         };
 
+        kavita = {
+          image = "linuxserver/kavita:0.8.4";
+          hostname = "kavita";
+          autoStart = true;
+          ports = [ "5000:5000" ];
+          environment = {
+            PUID = "0";
+            PGID = "0";
+            TZ = "America/New_York";
+            DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = "true";
+          };
+          volumes =
+            [ "/mnt/containers/kavita:/config" "/mnt/storage/media:/media" ];
+          user = "root:root";
+        };
+
         flaresolverr = {
           image = "flaresolverr/flaresolverr:v3.3.21";
           hostname = "flaresolverr";
@@ -293,6 +309,7 @@ in {
     systemd.services.podman-sonarr = systemdWaitForMounts;
     systemd.services.podman-bazarr = systemdWaitForMounts;
     systemd.services.podman-trangaapi = systemdWaitForMounts;
+    systemd.services.podman-kavita = systemdWaitForMounts;
     systemd.services.podman-jellyseerr = systemdWaitForMounts;
     systemd.services.podman-recyclarr = systemdWaitForMounts;
   };
