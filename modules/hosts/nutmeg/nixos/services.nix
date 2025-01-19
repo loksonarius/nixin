@@ -207,6 +207,37 @@ in {
           volumes = [ "/mnt/containers/bazarr:/config" "/mnt/storage:/data" ];
         };
 
+        trangaapi = {
+          image = "glax/tranga-api:latest";
+          hostname = "trangaapi";
+          autoStart = true;
+          ports = [ "6531:6531" ];
+          environment = {
+            PUID = "0";
+            PGID = "0";
+            TZ = "America/New_York";
+          };
+          user = "root:root";
+          volumes = [
+            "/mnt/containers/tranga-api:/usr/share/tranga-api"
+            "/mnt/storage/media/manga:/Manga"
+          ];
+        };
+
+        trangaui = {
+          image = "glax/tranga-website:latest";
+          hostname = "trangaui";
+          dependsOn = [ "trangaapi" ];
+          autoStart = true;
+          ports = [ "9555:80" ];
+          environment = {
+            PUID = "0";
+            PGID = "0";
+            TZ = "America/New_York";
+          };
+          user = "root:root";
+        };
+
         flaresolverr = {
           image = "flaresolverr/flaresolverr:v3.3.21";
           hostname = "flaresolverr";
@@ -261,6 +292,7 @@ in {
     systemd.services.podman-radarr = systemdWaitForMounts;
     systemd.services.podman-sonarr = systemdWaitForMounts;
     systemd.services.podman-bazarr = systemdWaitForMounts;
+    systemd.services.podman-trangaapi = systemdWaitForMounts;
     systemd.services.podman-jellyseerr = systemdWaitForMounts;
     systemd.services.podman-recyclarr = systemdWaitForMounts;
   };

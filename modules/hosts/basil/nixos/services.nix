@@ -210,6 +210,24 @@ in {
           volumes = [ "/mnt/containers/bazarr:/config" "/mnt/storage:/data" ];
         };
 
+        kapowarr = {
+          image = "mrcas/kapowarr:v1.0.0";
+          hostname = "kapowarr";
+          autoStart = true;
+          ports = [ "5656:5656/tcp" ];
+          environment = {
+            PUID = "0";
+            PGID = "0";
+            TZ = "America/New_York";
+          };
+          user = "root:root";
+          volumes = [
+            "/mnt/containers/kapowarr/db:/app/db"
+            "/mnt/containers/kapowarr/downloads:/app/temp_downloads"
+            "/mnt/storage/media/manga:/manga"
+          ];
+        };
+
         flaresolverr = {
           image = "flaresolverr/flaresolverr:v3.3.21";
           hostname = "flaresolverr";
@@ -264,6 +282,7 @@ in {
     systemd.services.podman-radarr = systemdWaitForMounts;
     systemd.services.podman-sonarr = systemdWaitForMounts;
     systemd.services.podman-bazarr = systemdWaitForMounts;
+    systemd.services.podman-kapowarr = systemdWaitForMounts;
     systemd.services.podman-jellyseerr = systemdWaitForMounts;
     systemd.services.podman-recyclarr = systemdWaitForMounts;
   };
