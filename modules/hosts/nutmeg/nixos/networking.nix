@@ -4,5 +4,6 @@ in {
   config = lib.mkIf enabled {
     networking.hostName = "nutmeg";
     networking.networkmanager.enable = true;
+    services.tailscale.enable = true;
   };
 }
