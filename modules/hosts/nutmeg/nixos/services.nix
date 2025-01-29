@@ -106,6 +106,21 @@ in {
           ];
         };
 
+        unpackerr = {
+          image = "golift/unpackerr:0.14.5";
+          hostname = "unpackerr";
+          dependsOn = [ "qbittorrent" "sabnzbd" "sonarr" "radarr" ];
+          autoStart = true;
+          environment = {
+            PUID = "0";
+            PGID = "0";
+            TZ = "America/New_York";
+            UN_LOG_FILE = "/config/unpackerr.log";
+          };
+          volumes =
+            [ "/mnt/containers/unpackerr:/config" "/mnt/storage:/data" ];
+        };
+
         pihole = {
           image = "pihole/pihole:2024.07.0";
           hostname = "pihole";
