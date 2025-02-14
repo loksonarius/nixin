@@ -44,23 +44,6 @@
     {
       colmena = {
         meta = { nixpkgs = import nixpkgs { system = "x86_64-linux"; }; };
-        "basil" = { pkgs, ... }: {
-          deployment = {
-            targetHost = "192.168.1.223";
-            targetUser = "root";
-          };
-
-          imports = [
-            agenix.nixosModules.default
-            secrets.nixosModules.default
-            ./modules/hosts/nixos.nix
-            {
-              secrets.host = "basil";
-              nixin.hosts.basil.enable = true;
-            }
-          ];
-        };
-
         "nutmeg" = { pkgs, ... }: {
           deployment = {
             targetHost = "192.168.1.113";
@@ -181,19 +164,6 @@
                   pkgs.solaar
                 ];
                 hardware.logitech.wireless.enable = true;
-              }
-            ];
-          };
-
-          "basil" = nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = [
-              agenix.nixosModules.default
-              secrets.nixosModules.default
-              ./modules/hosts/nixos.nix
-              {
-                secrets.host = "basil";
-                nixin.hosts.basil.enable = true;
               }
             ];
           };
