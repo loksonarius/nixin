@@ -7,9 +7,13 @@ in {
       enable32Bit = true;
     };
 
+    # meh
+    services.flatpak.enable = true;
+
     programs.gamemode.enable = true;
     programs.steam = {
       enable = true;
+      protontricks.enable = true;
       gamescopeSession.enable = true;
       remotePlay.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;

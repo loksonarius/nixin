@@ -13,6 +13,7 @@ in {
         dockerls.enable = true;
         # the godot package provided by nixpkgs does not compile on Darwin
         gdscript.enable = false;
+        graphql.enable = false;
         gopls.enable = true;
         jsonls.enable = true;
         lua_ls.enable = true;

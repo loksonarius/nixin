@@ -1,6 +1,54 @@
 {
   "lockfile_version": "1",
   "packages": {
+    "colmena@latest": {
+      "last_modified": "2024-12-23T21:10:33Z",
+      "resolved": "github:NixOS/nixpkgs/de1864217bfa9b5845f465e771e0ecb48b30e02d#colmena",
+      "source": "devbox-search",
+      "version": "0.4.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/x7lxj1rd2dcqsaglmc3nzabl8ynlb6gj-colmena-0.4.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/x7lxj1rd2dcqsaglmc3nzabl8ynlb6gj-colmena-0.4.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/ca9r8dppv7nv9jcfdsbmj6d4dwa386x8-colmena-0.4.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/ca9r8dppv7nv9jcfdsbmj6d4dwa386x8-colmena-0.4.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/hhv8idvwraw2i7mhpq5rlpy0j31qd7sd-colmena-0.4.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/hhv8idvwraw2i7mhpq5rlpy0j31qd7sd-colmena-0.4.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/xfyyldi1kr51850lwyd39cazssazprsg-colmena-0.4.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/xfyyldi1kr51850lwyd39cazssazprsg-colmena-0.4.0"
+        }
+      }
+    },
     "just": {
       "resolved": "github:NixOS/nixpkgs/75a52265bda7fd25e06e3a67dee3f0354e73243c#just",
       "source": "nixpkg"

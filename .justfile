@@ -8,6 +8,15 @@ switch flake: (nix "switch" flake)
 
 alias s := switch
 
+# Provision host
+provision host:
+    nix run github:nix-community/nixos-anywhere -- \
+        --flake '.#freshinstall' \
+        --generate-hardware-config nixos-generate-config ./modules/freshinstall/hardware-configuration.nix \
+        --target-host 'nixos@{{ host }}'
+
+alias p := provision
+
 [private]
 nix task flake:
     #!/usr/bin/env fish

@@ -29,6 +29,7 @@ in {
     ./lsd.nix
     ./misc-pkgs.nix
     ./nixvim
+    ./ssh.nix
     ./starship.nix
     ./tmux.nix
   ];
@@ -36,8 +37,15 @@ in {
   config = lib.mkIf enabled {
     home.username = "danh";
     home.homeDirectory = homeDir;
-    home.stateVersion = "23.05";
+    home.stateVersion = "25.05";
     programs.home-manager.enable = true;
+
+    # sets at user level for non-sys modules
+    xdg.configFile."nixpkgs/config.nix".enable = true;
+    xdg.configFile."nixpkgs/config.nix".text = ''
+      { allowUnfree = true; }
+    '';
+    nixpkgs.config.allowUnfree = true;
 
     # default-theme programs where possible
     catppuccin.flavor = "mocha";

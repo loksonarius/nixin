@@ -1,1 +1,1 @@
-{ lib, ... }: { imports = [ ./durian/nixos ./mandarin/nixos ]; }
+{ lib, ... }: { imports = [ ./nutmeg/nixos ./durian/nixos ./mandarin/nixos ]; }

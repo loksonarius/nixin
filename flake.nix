@@ -25,6 +25,10 @@
     # Used to pull-in pre-made configs for laptops and some hardware combos
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    # Configure disks and partitions for installs
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
     # Storing secrets in a whole other place
     secrets.url = "git+ssh://git@github.com/loksonarius/nixin-secrets.git";
     secrets.inputs.nixpkgs.follows = "nixpkgs";
@@ -36,8 +40,28 @@
   };
 
   outputs = inputs@{ self, nixpkgs, flake-utils, home-manager, nixvim
-    , catppuccin, nix-darwin, nixos-hardware, secrets, agenix, }:
-    flake-utils.lib.eachDefaultSystem (system:
+    , catppuccin, nix-darwin, nixos-hardware, disko, secrets, agenix, }:
+    {
+      colmena = {
+        meta = { nixpkgs = import nixpkgs { system = "x86_64-linux"; }; };
+        "nutmeg" = { pkgs, ... }: {
+          deployment = {
+            targetHost = "192.168.1.113";
+            targetUser = "root";
+          };
+
+          imports = [
+            agenix.nixosModules.default
+            secrets.nixosModules.default
+            ./modules/hosts/nixos.nix
+            {
+              secrets.host = "nutmeg";
+              nixin.hosts.nutmeg.enable = true;
+            }
+          ];
+        };
+      };
+    } // flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
           inherit system;
@@ -141,6 +165,29 @@
                 ];
                 hardware.logitech.wireless.enable = true;
               }
+            ];
+          };
+
+          "nutmeg" = nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [
+              agenix.nixosModules.default
+              secrets.nixosModules.default
+              ./modules/hosts/nixos.nix
+              {
+                secrets.host = "nutmeg";
+                nixin.hosts.nutmeg.enable = true;
+              }
+            ];
+          };
+
+          "freshinstall" = nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [
+              disko.nixosModules.disko
+              ./modules/freshinstall/configuration.nix
+              ./modules/freshinstall/hardware-configuration.nix
+              { disko.devices.disk.disk1.device = "/dev/nvme0n1"; }
             ];
           };
         };

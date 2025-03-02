@@ -70,6 +70,7 @@ two role types:
 access to a host
 - `hosts`: represents a machine that would have some component about it
 configured by some nix tool
+- `freshinstall`: a special instance used run the NixOS installer with
 
 Under each role, there will be module files for each configuration type
 needed to accomplish the role's intent. These will be directly imported up in
