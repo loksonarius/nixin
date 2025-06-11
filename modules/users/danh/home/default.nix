@@ -31,6 +31,7 @@ in {
     ./nixvim
     ./ssh.nix
     ./starship.nix
+    ./stylix.nix
     ./tmux.nix
   ];
 

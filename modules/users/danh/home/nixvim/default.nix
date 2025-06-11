@@ -23,7 +23,7 @@ in {
     };
 
     programs.nixvim.colorschemes.catppuccin = {
-      enable = true;
+      # enable = true;
       settings = {
         background.light = "latte";
         background.dark = "mocha";

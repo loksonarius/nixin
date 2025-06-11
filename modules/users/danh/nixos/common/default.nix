@@ -21,6 +21,6 @@ in {
 
     # default-theme programs where possible
     catppuccin.flavor = "mocha";
-    catppuccin.enable = true;
+    # catppuccin.enable = true;
   };
 }

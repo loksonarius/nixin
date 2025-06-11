@@ -18,6 +18,15 @@
     # Shotgun blast catppuccin everywhere
     catppuccin.url = "github:catppuccin/nix";
 
+    # Use stylix to apply all themes
+    stylix.url = "github:danth/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Confiugre KDE Plasma through Nix
+    plasma-manager.url = "github:nix-community/plasma-manager";
+    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.inputs.home-manager.follows = "home-manager";
+
     # Configure system preferences and manage brew
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -40,7 +49,8 @@
   };
 
   outputs = inputs@{ self, nixpkgs, flake-utils, home-manager, nixvim
-    , catppuccin, nix-darwin, nixos-hardware, disko, secrets, agenix, }:
+    , catppuccin, stylix, plasma-manager, nix-darwin, nixos-hardware, disko
+    , secrets, agenix, }:
     {
       colmena = {
         meta = { nixpkgs = import nixpkgs { system = "x86_64-linux"; }; };
@@ -78,6 +88,8 @@
             extraSpecialArgs = { inherit pkgs system; };
             modules = [
               catppuccin.homeManagerModules.catppuccin
+              stylix.homeModules.stylix
+              plasma-manager.homeManagerModules.plasma-manager
               nixvim.homeManagerModules.nixvim
               ./modules/users/home.nix
               { nixin.users.danh.enable = true; }
@@ -88,7 +100,9 @@
             inherit pkgs;
             extraSpecialArgs = { inherit pkgs system; };
             modules = [
-              catppuccin.homeManagerModules.catppuccin
+              # catppuccin.homeManagerModules.catppuccin
+              stylix.homeModules.stylix
+              plasma-manager.homeManagerModules.plasma-manager
               nixvim.homeManagerModules.nixvim
               ./modules/users/home.nix
               {
