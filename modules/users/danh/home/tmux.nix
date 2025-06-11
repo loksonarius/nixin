@@ -11,25 +11,6 @@ in {
       shell = "${pkgs.fish}/bin/fish";
       sensibleOnTop = false;
 
-      # need some manual control over plugin version and pre-run config
-      catppuccin.enable = false;
-
-      # plugins = [{
-      #   plugin = pkgs.tmuxPlugins.catppuccin.overrideAttrs (_: {
-      #     src = pkgs.fetchFromGitHub {
-      #       owner = "catppuccin";
-      #       repo = "tmux";
-      #       rev = "a3df709c68601abfee01bf39417d50fb421452d0";
-      #       sha256 = "sha256-4SDbUYTgurXnW7YTzPDqe13scDF3Y+N8Trd3zGeWFwA=";
-      #     };
-      #   });
-      #   extraConfig = lib.concatStringsSep "\n" [
-      #     ''set -g @catppuccin_flavour "macchiato"''
-      #     ''set -g @catppuccin_window_status_style "rounded"''
-      #     ''set -g @catppuccin_status_background "#{@thm_surface_2}"''
-      #   ];
-      # }];
-
       extraConfig = lib.concatStringsSep "\n" [
         "# Vim Keybindings"
         "bind -T copy-mode-vi v send -X begin-selection"
@@ -47,9 +28,6 @@ in {
         "set -g status-right-length 100"
         "set -g status-left-length 100"
         ''set -g status-left ""''
-        # ''set -g status-right "#{E:@catppuccin_status_application}"''
-        # ''set -agF status-right "#{E:@catppuccin_status_host}"''
-        # ''set -agF status-right "#{E:@catppuccin_status_date_time}"''
         "set-option -g status-position top"
 
         "# Big pane-resizing key binds"

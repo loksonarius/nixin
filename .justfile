@@ -33,7 +33,7 @@ nix task flake:
 
 [private]
 hm task flake:
-    NIXPKGS_ALLOW_UNFREE=1 nix run home-manager -- {{ task }} --impure --flake .#{{ flake }}
+    NIXPKGS_ALLOW_UNFREE=1 nix run home-manager -- {{ task }} --impure --flake .#{{ flake }} -b backup
 
 [private]
 darwin task flake:

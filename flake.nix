@@ -15,9 +15,6 @@
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Shotgun blast catppuccin everywhere
-    catppuccin.url = "github:catppuccin/nix";
-
     # Use stylix to apply all themes
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
@@ -48,9 +45,8 @@
 
   };
 
-  outputs = inputs@{ self, nixpkgs, flake-utils, home-manager, nixvim
-    , catppuccin, stylix, plasma-manager, nix-darwin, nixos-hardware, disko
-    , secrets, agenix, }:
+  outputs = inputs@{ self, nixpkgs, flake-utils, home-manager, nixvim, stylix
+    , plasma-manager, nix-darwin, nixos-hardware, disko, secrets, agenix, }:
     {
       colmena = {
         meta = { nixpkgs = import nixpkgs { system = "x86_64-linux"; }; };
@@ -87,10 +83,9 @@
             inherit pkgs;
             extraSpecialArgs = { inherit pkgs system; };
             modules = [
-              catppuccin.homeManagerModules.catppuccin
-              stylix.homeModules.stylix
               plasma-manager.homeManagerModules.plasma-manager
               nixvim.homeManagerModules.nixvim
+              stylix.homeModules.stylix
               ./modules/users/home.nix
               { nixin.users.danh.enable = true; }
             ];
@@ -100,10 +95,9 @@
             inherit pkgs;
             extraSpecialArgs = { inherit pkgs system; };
             modules = [
-              # catppuccin.homeManagerModules.catppuccin
-              stylix.homeModules.stylix
               plasma-manager.homeManagerModules.plasma-manager
               nixvim.homeManagerModules.nixvim
+              stylix.homeModules.stylix
               ./modules/users/home.nix
               {
                 nixin.users.danh.enable = true;
@@ -144,7 +138,6 @@
               agenix.nixosModules.default
               secrets.nixosModules.default
               nixos-hardware.nixosModules.framework-12th-gen-intel
-              catppuccin.nixosModules.catppuccin
               ./modules/users/nixos.nix
               ./modules/hosts/nixos.nix
               {
@@ -161,7 +154,6 @@
             modules = [
               agenix.nixosModules.default
               secrets.nixosModules.default
-              catppuccin.nixosModules.catppuccin
               ./modules/users/nixos.nix
               ./modules/hosts/nixos.nix
               {

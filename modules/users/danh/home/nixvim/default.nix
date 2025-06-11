@@ -22,13 +22,7 @@ in {
       clipboard.register = "unnamedplus";
     };
 
-    programs.nixvim.colorschemes.catppuccin = {
-      # enable = true;
-      settings = {
-        background.light = "latte";
-        background.dark = "mocha";
-      };
-    };
+    stylix.targets.nixvim.transparentBackground.main = true;
 
     programs.nixvim.plugins = {
       comment.enable = true;

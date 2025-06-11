@@ -47,9 +47,5 @@ in {
       { allowUnfree = true; }
     '';
     nixpkgs.config.allowUnfree = true;
-
-    # default-theme programs where possible
-    catppuccin.flavor = "mocha";
-    catppuccin.enable = true;
   };
 }
